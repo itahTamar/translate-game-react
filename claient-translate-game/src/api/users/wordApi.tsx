@@ -2,9 +2,10 @@ import axios from 'axios';
 
 //get all user word by userId
 //!build in server 
-export const getAllUserWordByUserId = async (user_id: string) => {
+// export const getAllUserWordByUserId = async (user_id: string) => {
+    export const getAllUserWord = async () => {
     try {
-        const response = await axios.get(`/API/userWords/${user_id}`);
+        const response = await axios.get('/api/userWords/get-user-words');
         const { ok, results } = response.data;
         console.log("At getAllUserWordByUserId the results:", results)
 
@@ -21,7 +22,7 @@ export const getAllUserWordByUserId = async (user_id: string) => {
 // get-random-3-user-words
 export const getRandomThreeUserWordByUserId = async (user_id: string) => {
     try {
-        const response = await axios.get(`/API/userWords/get-user-words/${user_id}`);
+        const response = await axios.get(`/api/userWords/get-user-words/${user_id}`);
         const { ok, results } = response.data;
         console.log("At getRandomThreeUserWordByUserId the results:", results)
 
@@ -38,7 +39,7 @@ export const getRandomThreeUserWordByUserId = async (user_id: string) => {
 //add word
 export const addWord = async (user_id: string, en_word: string, he_word: string) => {
     try {
-        const response = await axios.post(`/API/words/${user_id}`, {en_word, he_word});
+        const response = await axios.post(`/api/words/${user_id}`, {en_word, he_word});
         const { ok, results } = response.data;
         console.log("At addWord the results:", results)
         if (ok) {
@@ -55,7 +56,7 @@ export const addWord = async (user_id: string, en_word: string, he_word: string)
 //!build in server
 export const updateWordById = async (word_id:string ,en_word: string, he_word: string ) => {
     try {
-        const response = await axios.patch(`/API/words/${word_id}`, {en_word, he_word});
+        const response = await axios.patch(`/api/words/${word_id}`, {en_word, he_word});
         const { ok, results } = response.data;
         console.log("At updateWordById the results:", results)
 

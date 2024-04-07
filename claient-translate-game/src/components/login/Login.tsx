@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../api/users/userApi";
+import { UserContext } from "../../context/userContext";
 
 const Login = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
-  //const { setUser } = useContext(UserContext);
+  // const { setUser } = useContext(UserContext);
 
   const handleSubmitLogin = async (ev: React.FormEvent<HTMLFormElement>) => {
     try {
@@ -27,7 +28,7 @@ const Login = () => {
       const userData = data.data.userData;
       if (!userData) throw new Error("at handleSubmitLogin userData failed");
 
-      //setUser(userData);
+      // setUser(userData);
 
       navigate(`/main/homePage`);
     } catch (error) {
