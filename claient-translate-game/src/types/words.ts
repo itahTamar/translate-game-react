@@ -1,4 +1,5 @@
 export interface Word {
-    en_word: string;
-    he_word: string;
+    _id: string,
+    en_word: string,
+    he_word: string
 }

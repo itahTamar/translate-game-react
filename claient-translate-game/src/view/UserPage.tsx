@@ -6,11 +6,13 @@
 import { useEffect, useState } from "react"
 import { Word } from "../types/words"
 import { useNavigate } from "react-router-dom"
-import { getAllUserWord } from "../api/users/wordApi"
+import { deleteWordById, getAllUserWord } from "../api/users/wordApi"
+import PopupUpdateWord from "../components/update/PopupUpdateWord"
 
 const UserPage = () => {
     const [wordList, setWordList] = useState<Word[]>([])
     const [filterWordsList, setFilterWordsList] = useState<Word[]>([])
+    const [setshowPopupUpdateWord, setsetshowPopupUpdateWord] = useState(false);
     const navigate = useNavigate()
 
     const handleGetAllUserWords = async () => {
@@ -28,12 +30,19 @@ const UserPage = () => {
         handleGetAllUserWords()
     },[])
 
-    const handleUpdate = () => {
+    const handleUpdateWord = (wordId: string) => {
 
     }
 
-    const handleDelete = () => {
-
+    const handleDeleteWord = async (wordId: string) => {
+      if (wordId === undefined) throw new Error("At handleDeleteWord, wordId is undefined");
+    try {
+      const response = await deleteWordById(wordId);
+      console.log("At handleDeleteWord the data is: ", response)
+      navigate("/UserPage")
+    } catch (error) {
+      console.error("Error delete word:", error)
+    }
     }
 
   return (
@@ -45,8 +54,9 @@ const UserPage = () => {
         return (
             <div className="list-row" key={word.en_word}>
                 {word.en_word}, {word.he_word}
-                <button className='btn-pencil-img' onClick={() => handleUpdate()}>✏️</button>
-                <button className='btn-garbageCan-img' onClick={() => handleDelete()}>🗑️</button>
+                <button className='btn-pencil-img' onClick={() => setsetshowPopupUpdateWord(true)}>✏️</button>
+                  {setshowPopupUpdateWord && <PopupUpdateWord onClose={() => {setsetshowPopupUpdateWord(false), handleUpdateWord(word._id)}}/> }
+                <button className='btn-garbageCan-img' onClick={() => handleDeleteWord(word._id)}>🗑️</button>
             </div>
         )
     })) : null
