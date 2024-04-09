@@ -36,10 +36,11 @@ export const getRandomThreeUserWordByUserId = async (user_id: string) => {
     }
 };
 
-//add word
-export const addWord = async (user_id: string, en_word: string, he_word: string) => {
+//add word (userId in cookie)
+//!fix at server
+export const addWord = async (en_word: string, he_word: string) => {
     try {
-        const response = await axios.post(`/api/words/${user_id}`, {en_word, he_word});
+        const response = await axios.post(`/api/words/add-word}`, {en_word, he_word});
         const { ok, results } = response.data;
         console.log("At addWord the results:", results)
         if (ok) {

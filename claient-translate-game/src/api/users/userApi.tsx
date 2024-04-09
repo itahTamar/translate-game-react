@@ -43,11 +43,10 @@ export const getUserScores = async (userId: number) => {
 }
 
 //get-highest-score
-//!need to bield the fun' in server-side
-export const getHighestUserScores = async (userId: number) => {
+//!need to bield the fun' in server-side using userId from cookie
+export const getHighestUserScores = async () => {
     try {
-       if (!userId) throw new Error("no userId in getHighestUserScores");
-        const result = await axios.get(`/api/users/getHighestUserScores/${userId}`)
+        const result = await axios.get(`/api/users/getHighestUserScores`)
         return result
     } catch (error) {
         console.error(error)
