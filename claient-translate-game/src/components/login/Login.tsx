@@ -32,7 +32,7 @@ const Login = () => {
 
       // setUser(userData);
 
-      navigate(`/main/homePage`);
+      navigate(`/userPage`);
     } catch (error) {
       console.error(error);
     }

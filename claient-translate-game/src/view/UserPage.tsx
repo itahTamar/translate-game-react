@@ -1,8 +1,8 @@
 // 1) render a list of all user words, with the option to update or delete a word (like in the books project) ->done
 // 2) Add a new word form in popup -> done
 // 3) render the user highest score -> done
-// 4) Start paly button
-// 5) Log-out button will move the user back to landing page
+// 4) Start paly button -> done
+// 5) Log-out button will move the user back to landing page and delete the data from cookie -> done
 
 import { useEffect, useState } from "react";
 import { Word } from "../types/words";
@@ -11,6 +11,7 @@ import { deleteWordById, getAllUserWord } from "../api/users/wordApi";
 import PopupUpdateWord from "../components/words/PopupUpdateWord";
 import { getHighestUserScores } from "../api/users/userApi";
 import PopupAddWord from "../components/words/PopupAddWord";
+import Cookies from 'js-cookie';
 
 const UserPage = () => {
   const [wordList, setWordList] = useState<Word[]>([]);
@@ -63,15 +64,21 @@ const UserPage = () => {
     }
   };
 
+  const handleLogout = () => {
+    Cookies.remove("user")
+    navigate("/")
+  }
+
   return (
     <>
       <div className="container">
-        <button>LogOut</button>
+        <button onClick={handleLogout}>LogOut</button>
         <p>Your Highest Score:{highScore}</p>
-        <button onClick={() => setShowPopupAddWord(true)}>Add Know Word</button>
+        <button onClick={() => setShowPopupAddWord(true)}>Add new Word</button>
         {showPopupAddWord && (
           <PopupAddWord onClose={() => setShowPopupAddWord(false)} />
         )}
+        <button onClick={() => {navigate("/playGame")}}>Play Now</button>
       </div>
       <div>
         <h2>Here are all your DB words:</h2>
