@@ -18,11 +18,22 @@ export const login = async (username: string, password: string) => {
     try {
         if ( !username || !password) throw new Error("please provide a valid username and password to login");
         return await axios.post("/api/users/login", {username, password})
-        
+        //return "ok" from server and userID encoded in cookie
     } catch (error) {
         console.error(error)
     }
 } //
+
+//get user name
+//!fix on server
+export const getUserName = async () => {
+    try {
+        const result = await axios.get(`/api/users/getUser`)
+        return result
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 //logOut
 export const logout = () => {
@@ -32,10 +43,10 @@ export const logout = () => {
 
 //get-scores
 //!need to bield the fun' in server-side
-export const getUserScores = async (userId: number) => {
+//userId is in cookie
+export const getUserScores = async () => {
     try {
-       if (!userId) throw new Error("no userId in getUserScores");
-        const result = await axios.get(`/api/users/getUserScores/${userId}`)
+        const result = await axios.get(`/api/users/getUserScores`)
         return result
     } catch (error) {
         console.error(error)
