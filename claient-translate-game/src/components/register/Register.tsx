@@ -12,9 +12,9 @@ const Register = () => {
       ev.preventDefault();
       const data = { userName, password };
       if (!data) throw new Error("register failed - no email or password");
-      const ok = await register(userName, password);
-      if (!ok) throw new Error("register failed from server");
-      navigate("/landingPage");
+      const response = await register(userName, password);
+      if (!response) throw new Error("register failed from server");
+      navigate("/");
     } catch (error) {
       console.error(error);
     }

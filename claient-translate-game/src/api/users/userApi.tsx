@@ -6,7 +6,14 @@ import Cookies from 'js-cookie';
 export const register = async (userName: string, password: string) => {
     try {
         if (!password || !userName) throw new Error("please provide a valid username and password to register");
-        return await axios.post("/api/users/register", { userName, password})
+        const response = await axios.post("/api/users/register", { userName, password})
+        console.log("at user-api register response from server is:", response.data.ok)
+        if (!response.data.ok){
+            alert("chose a different username")
+            throw new Error(response.data);
+            
+        }
+        return response.data
         
     } catch (error) {
         console.error(error)
@@ -19,13 +26,13 @@ export const login = async (userName: string, password: string) => {
         if ( !userName || !password) throw new Error("please provide a valid username and password to login");
         const response = await axios.post("/api/users/login", {userName, password})
         console.log("at user-api login response from server is:", response)
-        return response
+        return response.data
 
         //return "ok" from server and userID encoded in cookie
     } catch (error) {
         console.error(error)
     }
-} //
+} //work ok
 
 //get user name
 //!fix on server
