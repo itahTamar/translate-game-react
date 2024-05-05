@@ -46,6 +46,7 @@ const PlayGame = () => {
     if (wordList[random]._id === wordList[numberOfWord]._id) {
       setShowMassage("Correct answer!")
       wordList.splice(random)
+      setScore(counter+1)
     } else {
       setShowMassage("Wrong answer!")
     }

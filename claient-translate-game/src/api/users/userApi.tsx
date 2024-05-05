@@ -3,10 +3,10 @@ import axios from "axios";
 import Cookies from 'js-cookie';
 
 //register
-export const register = async (username: string, password: string) => {
+export const register = async (userName: string, password: string) => {
     try {
-        if (!password || !username) throw new Error("please provide a valid username and password to register");
-        return await axios.post("/api/users/register", { username, password})
+        if (!password || !userName) throw new Error("please provide a valid username and password to register");
+        return await axios.post("/api/users/register", { userName, password})
         
     } catch (error) {
         console.error(error)
@@ -14,10 +14,13 @@ export const register = async (username: string, password: string) => {
 } //
 
 //logIn
-export const login = async (username: string, password: string) => {
+export const login = async (userName: string, password: string) => {
     try {
-        if ( !username || !password) throw new Error("please provide a valid username and password to login");
-        return await axios.post("/api/users/login", {username, password})
+        if ( !userName || !password) throw new Error("please provide a valid username and password to login");
+        const response = await axios.post("/api/users/login", {userName, password})
+        console.log("at user-api login response from server is:", response)
+        return response
+
         //return "ok" from server and userID encoded in cookie
     } catch (error) {
         console.error(error)

@@ -1,15 +1,11 @@
-import {
-  //  useContext,
-   useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../api/users/userApi";
-// import { UserContext } from "../../context/userContext";
-
+//work ok
 const Login = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
-  // const { setUser } = useContext(UserContext);
 
   const handleSubmitLogin = async (ev: React.FormEvent<HTMLFormElement>) => {
     try {
@@ -19,18 +15,13 @@ const Login = () => {
         username,
         password
       );
-      const data = await login(username, password);
-      if (!data) {
+      const response = await login(username, password);
+      if (!response) {
         window.alert(
           "login failed! check your username or password or please register first"
         );
         throw new Error("login failed, please register first");
       }
-
-      const userData = data.data.userData;
-      if (!userData) throw new Error("at handleSubmitLogin userData failed");
-
-      // setUser(userData);
 
       navigate(`/userPage`);
     } catch (error) {
