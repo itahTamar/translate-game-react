@@ -19,12 +19,15 @@ import axios from 'axios';
     }
 };
 
-// get-random-3-user-words
-export const getRandomThreeUserWordByUserId = async (user_id: string) => {
+// get-random-9-user-words
+//get array of 9 words
+// userId in cookie
+//! fix on server
+export const getRandomNineUserWordByUserId = async () => {
     try {
-        const response = await axios.get(`/api/userWords/get-user-words/${user_id}`);
+        const response = await axios.get(`/api/userWords/get-user-words`);
         const { ok, results } = response.data;
-        console.log("At getRandomThreeUserWordByUserId the results:", results)
+        console.log("At getRandomNineUserWordByUserId the results:", results)
 
          if (ok) {
             return results;

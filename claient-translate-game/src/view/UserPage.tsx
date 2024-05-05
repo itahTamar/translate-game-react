@@ -3,6 +3,7 @@
 // 3) render the user highest score -> done
 // 4) Start paly button -> done
 // 5) Log-out button will move the user back to landing page and delete the data from cookie -> done
+// 6) make the render-word a lazy-load
 
 import { useEffect, useState } from "react";
 import { Word } from "../types/words";
@@ -78,7 +79,7 @@ const UserPage = () => {
         {showPopupAddWord && (
           <PopupAddWord onClose={() => setShowPopupAddWord(false)} />
         )}
-        <button onClick={() => {navigate("/playGame")}}>Play Now</button>
+        <button onClick={() => {navigate(`/playGame/:${wordList}`)}}>Play Now</button>
       </div>
       <div>
         <h2>Here are all your DB words:</h2>
