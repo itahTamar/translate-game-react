@@ -24,13 +24,16 @@ const UserPage = () => {
 
   const handleGetAllUserWords = async () => {
     try {
-      const response = await getAllUserWord();
+      const response = await getAllUserWord(); //work ok
       if (!response)
         throw new Error(
           "No response from axios getAllUserWord at handleGetAllUserWords"
         );
       setWordList(response);
       setFilterWordsList(response);
+      console.log("at userPage/handleGetAllUserWords the response:", response)
+      console.log("at userPage/handleGetAllUserWords the wordList:", wordList)
+
     } catch (error) {
       console.error(error);
     }

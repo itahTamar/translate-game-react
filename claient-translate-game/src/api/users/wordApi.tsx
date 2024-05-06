@@ -1,16 +1,19 @@
 import axios from 'axios';
+import { WordObject } from './../../types/words';
 
 //get all user word by userId
-//!build in server 
-// export const getAllUserWordByUserId = async (user_id: string) => {
-    export const getAllUserWord = async () => {
+//userId in cookie
+export const getAllUserWord = async () => {
     try {
-        const response = await axios.get('/api/userWords/get-user-words');
-        const { ok, results } = response.data;
-        console.log("At getAllUserWordByUserId the results:", results)
+        const response = await axios.get('/api/userWords/getAllUsersWords');
+        console.log("At getAllUserWordByUserId the response:", response)
+        const { ok, words } = response.data;
+        console.log("At getAllUserWordByUserId the results:", words)
 
          if (ok) {
-            return results;
+            const wordsArray = response.data.words.map((item: WordObject) => item.word);
+            console.log("At getAllUserWordByUserId the wordsArray:",wordsArray);
+            return wordsArray;
         } else {
             console.error("Error retrieving words:", response.data.error);
         }
@@ -40,7 +43,7 @@ export const getRandomNineUserWordByUserId = async () => {
 };
 
 //add word (userId in cookie)
-//!fix at server
+//fixed at server
 export const addWord = async (en_word: string, he_word: string) => {
     try {
         const response = await axios.post(`/api/words/add-word}`, {en_word, he_word});
