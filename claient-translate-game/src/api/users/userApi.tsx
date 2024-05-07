@@ -28,7 +28,7 @@ export const login = async (userName: string, password: string) => {
         console.log("at user-api login response from server is:", response)
         return response.data
 
-        //return "ok" from server and userID encoded in cookie
+        //return "ok: true" from server and userID encoded in cookie
     } catch (error) {
         console.error(error)
     }
@@ -36,14 +36,15 @@ export const login = async (userName: string, password: string) => {
 
 //get user name
 //!fix on server
-export const getUserName = async () => {
-    try {
-        const result = await axios.get(`/api/users/getUser`)
-        return result
-    } catch (error) {
-        console.error(error)
-    }
-}
+//!unnecessary
+// export const getUserName = async () => {
+//     try {
+//         const result = await axios.get(`/api/users/getUser`)
+//         return result
+//     } catch (error) {
+//         console.error(error)
+//     }
+// }
 
 //logOut
 export const logout = () => {

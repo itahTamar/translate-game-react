@@ -5,14 +5,14 @@
 // 5) Log-out button will move the user back to landing page and delete the data from cookie -> done
 // 6) make the render-word a lazy-load
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Word } from "../types/words";
 import { useNavigate } from "react-router-dom";
 import { deleteWordById, getAllUserWord } from "../api/users/wordApi";
 import PopupUpdateWord from "../components/words/PopupUpdateWord";
 import { getHighestUserScores } from "../api/users/userApi";
 import PopupAddWord from "../components/words/PopupAddWord";
-import Cookies from 'js-cookie';
+import { UserContext } from "../context/userContext";
 
 const UserPage = () => {
   const [wordList, setWordList] = useState<Word[]>([]);
@@ -20,24 +20,22 @@ const UserPage = () => {
   const [showPopupUpdateWord, setShowPopupUpdateWord] = useState(false);
   const [showPopupAddWord, setShowPopupAddWord] = useState(false);
   const [highScore, setHighScore] = useState();
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleGetAllUserWords = async () => {
     try {
-      const response = await getAllUserWord(); //work ok
+      const response = await getAllUserWord(); 
       if (!response)
         throw new Error(
           "No response from axios getAllUserWord at handleGetAllUserWords"
         );
       setWordList(response);
       setFilterWordsList(response);
-      console.log("at userPage/handleGetAllUserWords the response:", response)
-      console.log("at userPage/handleGetAllUserWords the wordList:", wordList)
-
     } catch (error) {
       console.error(error);
     }
-  };
+  };//work ok
 
   const handleGetUserHighScore = async () => {
     try {
@@ -69,13 +67,14 @@ const UserPage = () => {
   };
 
   const handleLogout = () => {
-    Cookies.remove("user")
+    // Cookies.remove("user")
     navigate("/")
   }
 
   return (
     <>
       <div className="container">
+        <h1>hello {user}</h1>
         <button onClick={handleLogout}>LogOut</button>
         <p>Your Highest Score:{highScore}</p>
         <button onClick={() => setShowPopupAddWord(true)}>Add new Word</button>

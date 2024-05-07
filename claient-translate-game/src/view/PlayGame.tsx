@@ -1,12 +1,13 @@
 // need to add word cards component to render
 // need to add a massage "popup" for correct/wrong answer
 
-import { useEffect, useState } from "react";
-import { getUserName, getUserScores } from "../api/users/userApi";
+import { useContext, useEffect, useState } from "react";
+import { getUserScores } from "../api/users/userApi";
 // import { useParams } from "react-router-dom";
 import WordCard from "../components/words/WordCard";
 import { getRandomNineUserWordByUserId } from "../api/users/wordApi";
 import { Word } from "../types/words";
+import { UserContext } from "../context/userContext";
 
 const PlayGame = () => {
   const [userName, setUserName] = useState("");
@@ -15,23 +16,13 @@ const PlayGame = () => {
   const [wordList, setWordList] = useState<Word[]>([])
   const [counter, setCounter] = useState(0)
   const [showMassage, setShowMassage] = useState("")
+  const { user } = useContext(UserContext)
 
   const handleFinish = () => {
     //at end of the game the score will saved to user DB-scores
   };
 
-  const OnLoadGame = async () => {
-    try {
-      const response = await getUserName();
-      if (!response) throw new Error("no user name from server");
-      setUserName(response.data);
-      LoadWords()
-    } catch (error) {
-      console.error("Error onLoad:", error);
-    }
-  };
-
-  const LoadWords = async () => {
+   const LoadWords = async () => {
     try {
       const secondResponse = await getRandomNineUserWordByUserId()  //get array of 9 words
       if (!secondResponse) throw new Error("no user words from server");
@@ -54,10 +45,6 @@ const PlayGame = () => {
   }
 
   useEffect(() => {
-    OnLoadGame();
-  }, []);
-
-  useEffect(() => {
     LoadWords()
   },[counter===9])
 
@@ -69,7 +56,7 @@ const PlayGame = () => {
     <>
       <div className="game">
         <div className="wrapper">
-          <h1 className="username">Hello {userName}</h1>
+          <h1 className="username">Hello {user}</h1>
           <h4 className="instruction">Match the word to its meaning</h4>
           <p>your score: {score}</p>
           <div className="wrapper">
