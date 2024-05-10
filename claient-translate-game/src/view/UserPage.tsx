@@ -54,14 +54,11 @@ const UserPage = () => {
       
     } catch (error) {
       console.error(error, "at handleGetUserHighScore got a catch");
-
     }
-  };
+  }; //work ok
 
   useEffect(() => {
     handleGetUserHighScore();
-    console.log("at userPage/handleGetAllUserWords the highScore:", highScore)
-
   }, []);
 
   useEffect(() => {

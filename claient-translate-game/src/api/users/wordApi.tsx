@@ -20,17 +20,16 @@ export const getAllUserWord = async () => {
     } catch (error) {
         console.error("Error:", (error as Error).message);
     }
-};
+}; //work ok
 
-// get-random-9-user-words
+//get-random-X-user-words  x=9 at server
 //get array of 9 words
 // userId in cookie
-//! fix on server
-export const getRandomNineUserWordByUserId = async () => {
+export const getXRandomUserWordByUserId = async () => {
     try {
-        const response = await axios.get(`/api/userWords/get-user-words`);
+        const response = await axios.get(`/api/userWords/getXRandomUserWords`);
         const { ok, results } = response.data;
-        console.log("At getRandomNineUserWordByUserId the results:", results)
+        console.log("At getXRandomUserWordByUserId the results:", results)
 
          if (ok) {
             return results;
@@ -46,11 +45,11 @@ export const getRandomNineUserWordByUserId = async () => {
 //fixed at server
 export const addWord = async (en_word: string, he_word: string) => {
     try {
-        const response = await axios.post(`/api/words/add-word}`, {en_word, he_word});
-        const { ok, results } = response.data;
-        console.log("At addWord the results:", results)
+        const response = await axios.post(`/api/words/add-word`, {en_word, he_word});
+        console.log("At addWord the results:", response)
+        const { ok, words } = response.data;
         if (ok) {
-           return results
+           return words
         } else {
             console.error("Error retrieving words:", response.data.error);
         }
