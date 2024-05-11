@@ -18,7 +18,7 @@ export const register = async (userName: string, password: string) => {
     } catch (error) {
         console.error(error)
     }
-} //
+} //work ok
 
 //logIn
 export const login = async (userName: string, password: string) => {

@@ -18,7 +18,8 @@ const LandingPage = () => {
       >
         Register
       </button>
-      <p>Or log-in to your Vocabulary game here</p>
+      {/* <p>Or log-in to your Vocabulary game here</p> */}
+      <p>Or</p>
       <button className="login" onClick={() => setShowPopupLogin(true)}>
         Log in
       </button>
