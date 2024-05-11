@@ -19,7 +19,6 @@ const LandingPage = () => {
         Register
       </button>
       <p>Or log-in to your Vocabulary game here</p>
-      {/* <button onClick={() => {navigate(`/login`)}}>LogIn</button> */}
       <button className="login" onClick={() => setShowPopupLogin(true)}>
         Log in
       </button>

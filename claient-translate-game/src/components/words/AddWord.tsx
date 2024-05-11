@@ -1,13 +1,11 @@
-import { useNavigate } from "react-router-dom";
-import { addWord } from "./../../api/users/wordApi";
 import { useState } from "react";
+import { addWord } from "./../../api/users/wordApi";
 
 //work ok
 const AddWord = () => {
   const [enWord, setEnWord] = useState("");
   const [heWord, setHeWord] = useState("");
-  const navigate = useNavigate();
-
+  
   const handleAddWord = async (ev: React.FormEvent<HTMLFormElement>) => {
     try {
       ev.preventDefault();
@@ -27,8 +25,8 @@ const AddWord = () => {
     }
   };
   return (
-    <div className="login-container">
-      <form onSubmit={handleAddWord} className="login-form">
+    <div className="form-container">
+      <form onSubmit={handleAddWord} className="form">
         <h2>Add a new word</h2>
         <input
           type="text"

@@ -2,12 +2,11 @@
 // need to add a massage "popup" for correct/wrong answer
 
 import { useContext, useEffect, useState } from "react";
-import { getUserScores } from "../api/users/userApi";
 // import { useParams } from "react-router-dom";
+// import { getRandomNineUserWordByUserId } from "../api/users/wordApi";
 import WordCard from "../components/words/WordCard";
-import { getRandomNineUserWordByUserId } from "../api/users/wordApi";
-import { Word } from "../types/words";
 import { UserContext } from "../context/userContext";
+import { Word } from "../types/words";
 
 const PlayGame = () => {
   const [userName, setUserName] = useState("");
@@ -22,15 +21,15 @@ const PlayGame = () => {
     //at end of the game the score will saved to user DB-scores
   };
 
-   const LoadWords = async () => {
-    try {
-      const secondResponse = await getRandomNineUserWordByUserId()  //get array of 9 words
-      if (!secondResponse) throw new Error("no user words from server");
-      setWordList(secondResponse)
-    } catch (error) {
-      console.error("Error Load words:", error);
-    } 
-  }
+  //  const LoadWords = async () => {
+  //   try {
+  //     const secondResponse = await getRandomNineUserWordByUserId()  //get array of 9 words
+  //     if (!secondResponse) throw new Error("no user words from server");
+  //     setWordList(secondResponse)
+  //   } catch (error) {
+  //     console.error("Error Load words:", error);
+  //   } 
+  // }
 
   let random: number = Math.floor(Math.random()*3)
   const checkMatch = (numberOfWord: number) => {
@@ -45,7 +44,7 @@ const PlayGame = () => {
   }
 
   useEffect(() => {
-    LoadWords()
+    // LoadWords()
   },[counter===9])
 
   // useEffect(()=>{

@@ -59,10 +59,12 @@ export const addWord = async (en_word: string, he_word: string) => {
 };
 
 //update word by wordID
-//!build in server
+//build in server
 export const updateWordById = async (word_id:string ,en_word: string, he_word: string ) => {
     try {
-        const response = await axios.patch(`/api/words/${word_id}`, {en_word, he_word});
+        const response = await axios.patch(`/api/words/updateWord/${word_id}`, {en_word, he_word});
+        console.log("At updateWordById the response:", response)
+        
         const { ok, results } = response.data;
         console.log("At updateWordById the results:", results)
 
@@ -74,7 +76,7 @@ export const updateWordById = async (word_id:string ,en_word: string, he_word: s
     } catch (error) {
         console.error("Error:", (error as Error).message);
     }
-};
+}; //work ok
 
 //delete-word by wordID
 //!build in server

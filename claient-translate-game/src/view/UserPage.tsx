@@ -9,12 +9,12 @@ import Cookies from "js-cookie";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteWordById, getAllUserWord } from "../api/users/wordApi";
-import PopupUpdateWord from "../components/words/PopupUpdateWord";
 import { UserContext } from "../context/userContext";
 import { Word } from "../types/words";
 import { getUserHighScore } from "./../api/users/userApi";
 import Popup from "./../components/popup";
 import AddWord from "./../components/words/AddWord";
+import UpdateWord from "./../components/words/UpdateWord";
 
 const UserPage = () => {
   const [wordList, setWordList] = useState<Word[]>([]);
@@ -66,7 +66,7 @@ const UserPage = () => {
 
   useEffect(() => {
     handleGetAllUserWords();
-  }, [show]);
+  }, [show, showPopupUpdateWord]);
 
   const handleDeleteWord = async (wordId: string) => {
     if (wordId === undefined)
@@ -83,6 +83,10 @@ const UserPage = () => {
   const handleLogout = () => {
     Cookies.remove("user");
     navigate("/");
+  };
+
+  const handleSuccessfulUpdate = () => {
+    setShowPopupUpdateWord(false); 
   };
 
   return (
@@ -134,10 +138,9 @@ const UserPage = () => {
                           ✏️
                         </button>
                         {showPopupUpdateWord && (
-                          <PopupUpdateWord
-                            word={word}
-                            onClose={() => setShowPopupUpdateWord(false)}
-                          />
+                          <Popup onClose={() => setShowPopupUpdateWord(false)}>
+                            <UpdateWord word={word} onSuccessfulUpdate={handleSuccessfulUpdate}/>
+                          </Popup>
                         )}
                         <button
                           className="btn-garbageCan-img"
