@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { addWord } from "./../../api/users/wordApi";
 import { useState } from "react";
 
+//work ok
 const AddWord = () => {
   const [enWord, setEnWord] = useState("");
   const [heWord, setHeWord] = useState("");

@@ -5,15 +5,16 @@
 // 5) Log-out button will move the user back to landing page and delete the data from cookie -> done
 // 6) make the render-word a lazy-load
 
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteWordById, getAllUserWord } from "../api/users/wordApi";
-import PopupAddWord from "../components/words/PopupAddWord";
 import PopupUpdateWord from "../components/words/PopupUpdateWord";
 import { UserContext } from "../context/userContext";
 import { Word } from "../types/words";
-import { getUserHighScore } from './../api/users/userApi';
+import { getUserHighScore } from "./../api/users/userApi";
+import Popup from "./../components/popup";
+import AddWord from "./../components/words/AddWord";
 
 const UserPage = () => {
   const [wordList, setWordList] = useState<Word[]>([]);
@@ -42,16 +43,18 @@ const UserPage = () => {
 
   const handleGetUserHighScore = async () => {
     try {
-      console.log("at load userPage the wordList is:", wordList)
+      console.log("at load userPage the wordList is:", wordList);
       const response: number = await getUserHighScore();
-      console.log("at userPage/handleGetAllUserWords the response:", response)
-      if (!response && response!=0)
+      console.log("at userPage/handleGetAllUserWords the response:", response);
+      if (!response && response != 0)
         throw new Error(
           "No response from axios getHighestUserScores at handleGetUserHighScore"
         );
-      setHighScore(response); 
-      console.log("at userPage/handleGetAllUserWords the highScore:", highScore)
-      
+      setHighScore(response);
+      console.log(
+        "at userPage/handleGetAllUserWords the highScore:",
+        highScore
+      );
     } catch (error) {
       console.error(error, "at handleGetUserHighScore got a catch");
     }
@@ -78,8 +81,8 @@ const UserPage = () => {
   };
 
   const handleLogout = () => {
-    Cookies.remove('user')
-    navigate("/");    
+    Cookies.remove("user");
+    navigate("/");
   };
 
   return (
@@ -90,7 +93,9 @@ const UserPage = () => {
         <p>Your Highest Score: {highScore}</p>
         <button onClick={() => setShowPopupAddWord(true)}>Add new Word</button>
         {showPopupAddWord && (
-          <PopupAddWord onClose={() => setShowPopupAddWord(false)} />
+          <Popup onClose={() => setShowPopupAddWord(false)}>
+            <AddWord />
+          </Popup>
         )}
         <button
           onClick={() => {
@@ -104,8 +109,11 @@ const UserPage = () => {
         <button
           onClick={() => {
             setShow(!show);
-            {!show ? setMassage("close session") : setMassage("Handle your words")}
-            ;
+            {
+              !show
+                ? setMassage("close session")
+                : setMassage("Handle your words");
+            }
           }}
         >
           {massage}
