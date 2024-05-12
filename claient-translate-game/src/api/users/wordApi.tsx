@@ -79,16 +79,14 @@ export const updateWordById = async (word_id:string ,en_word: string, he_word: s
 }; //work ok
 
 //delete-word by wordID
-//!build in server
-export const deleteWordById = async (word_id: string) => {
+//build in server
+export const deleteUserWordById = async (word_id: string) => {
     try {
-        const response = await axios.delete(`/API/words/${word_id}`);
-        const { ok, results } = response.data;
-        console.log("At deleteWordById the results:", results)
+        const response = await axios.delete(`/api/userWords/deleteUserWord/${word_id}`);
+        console.log("At deleteWordById the response:", response)
 
-        if (ok) {
-          
-           return results
+        if (response.data.ok) {
+           return response.data
         } else {
             console.error("Error retrieving words:", response.data.error);
         }

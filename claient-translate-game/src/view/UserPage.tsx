@@ -8,10 +8,11 @@
 import Cookies from "js-cookie";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { deleteWordById, getAllUserWord } from "../api/users/wordApi";
+import { getAllUserWord } from "../api/users/wordApi";
 import { UserContext } from "../context/userContext";
 import { Word } from "../types/words";
 import { getUserHighScore } from "./../api/users/userApi";
+import { deleteUserWordById } from './../api/users/wordApi';
 import Popup from "./../components/popup";
 import AddWord from "./../components/words/AddWord";
 import UpdateWord from "./../components/words/UpdateWord";
@@ -21,9 +22,11 @@ const UserPage = () => {
   const [filterWordsList, setFilterWordsList] = useState<Word[]>([]);
   const [showPopupUpdateWord, setShowPopupUpdateWord] = useState(false);
   const [showPopupAddWord, setShowPopupAddWord] = useState(false);
+  const [showMassage, setShowMassage] = useState(false)
   const [highScore, setHighScore] = useState<number>();
   const [show, setShow] = useState(false);
   const [massage, setMassage] = useState("Handle your words");
+  const [handleWordMassage, setHandleWordMassage] = useState<string>("")
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -72,13 +75,22 @@ const UserPage = () => {
     if (wordId === undefined)
       throw new Error("At handleDeleteWord, wordId is undefined");
     try {
-      const response = await deleteWordById(wordId);
+      const response = await deleteUserWordById(wordId);
       console.log("At handleDeleteWord the data is: ", response);
+      const {ok, massage} = response
+      if(ok){
+        setShowMassage(true)
+        setHandleWordMassage(massage)
+        handleGetAllUserWords()
+        setTimeout(() => {
+          setShowMassage(false);
+        }, 3000);
+      } 
       navigate("/UserPage");
     } catch (error) {
       console.error("Error delete word:", error);
     }
-  };
+  }; //work ok
 
   const handleLogout = () => {
     Cookies.remove("user");
@@ -87,7 +99,7 @@ const UserPage = () => {
 
   const handleSuccessfulUpdate = () => {
     setShowPopupUpdateWord(false); 
-  };
+  }; //work ok
 
   return (
     <>
@@ -124,7 +136,8 @@ const UserPage = () => {
         </button>
         {show ? (
           <div>
-            <h2>Here are all your DB words:</h2>
+            <h2>Here are all your words:</h2>
+            {showMassage ? <h4>{handleWordMassage}</h4> : null}
             <div className="list-container">
               {filterWordsList && wordList.length > 0
                 ? filterWordsList.map((word) => {
