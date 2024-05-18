@@ -9,17 +9,7 @@ const LandingPage = () => {
 
   return (
     <div>
-      <h1>Welcome to the Vocabulary game practice</h1>
-      <p>If you haven't register yet, please do it here</p>
-      <button
-        onClick={() => {
-          navigate(`/register`);
-        }}
-      >
-        Register
-      </button>
-      {/* <p>Or log-in to your Vocabulary game here</p> */}
-      <p>Or</p>
+      <h1>Vocabulary Game</h1>
       <button className="login" onClick={() => setShowPopupLogin(true)}>
         Log in
       </button>
@@ -28,6 +18,15 @@ const LandingPage = () => {
           <Login />
         </Popup>
       )}
+      <p>or</p>
+      <button
+        onClick={() => {
+          navigate(`/register`);
+        }}
+      >
+        Register first
+      </button>
+         
       <p>
         In this game you can practice your english vocabulary. You'll be
         presented with one English word and three possible interpretations, you

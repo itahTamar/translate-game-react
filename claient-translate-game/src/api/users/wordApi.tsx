@@ -28,11 +28,14 @@ export const getAllUserWord = async () => {
 export const getXRandomUserWordByUserId = async () => {
     try {
         const response = await axios.get(`/api/userWords/getXRandomUserWords`);
-        const { ok, results } = response.data;
-        console.log("At getXRandomUserWordByUserId the results:", results)
+        console.log("At getXRandomUserWordByUserId the response:", response)
+        console.log("At getXRandomUserWordByUserId the response.data:", response.data)
+
+        const { ok, words } = response.data;
+        console.log("At getXRandomUserWordByUserId the words:", words)
 
          if (ok) {
-            return results;
+            return words;  //array of [{_id, en_word, he_word},{}..]
         } else {
             console.error("Error retrieving words:", response.data.error);
         }

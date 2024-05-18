@@ -9,11 +9,17 @@ interface WordProp {
 }
 
 const WordCard: FC<WordProp> = ({word, label}) => {
-  const [wordID, setWordID] = useState(word._id)
+
   return (
     <div>
-      {label === "HE" ? word.he_word : word.en_word }    
-    </div>
+    {word ? (
+      <div>
+        {label === "HE" ? word.he_word : word.en_word}
+      </div>
+    ) : (
+      <div>Loading...</div>
+    )}
+  </div>
   )
 }
 

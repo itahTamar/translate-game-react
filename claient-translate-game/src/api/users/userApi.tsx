@@ -70,9 +70,9 @@ export const getUserHighScore = async () => {
 
 //get-highest-score
 //!need to bield the fun' in server-side using userId from cookie
-export const getHighestUserScores = async () => {
+export const saveUserScore = async () => {
     try {
-        const result = await axios.get(`/api/users/getHighestUserScores`)
+        const result = await axios.post(`/api/users/`)
         return result
     } catch (error) {
         console.error(error)

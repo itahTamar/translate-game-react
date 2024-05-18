@@ -8,11 +8,10 @@
 import Cookies from "js-cookie";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllUserWord } from "../api/users/wordApi";
 import { UserContext } from "../context/userContext";
 import { Word } from "../types/words";
 import { getUserHighScore } from "./../api/users/userApi";
-import { deleteUserWordById } from './../api/users/wordApi';
+import { deleteUserWordById, getAllUserWord } from "./../api/users/wordApi";
 import Popup from "./../components/popup";
 import AddWord from "./../components/words/AddWord";
 import UpdateWord from "./../components/words/UpdateWord";
@@ -22,11 +21,11 @@ const UserPage = () => {
   const [filterWordsList, setFilterWordsList] = useState<Word[]>([]);
   const [showPopupUpdateWord, setShowPopupUpdateWord] = useState(false);
   const [showPopupAddWord, setShowPopupAddWord] = useState(false);
-  const [showMassage, setShowMassage] = useState(false)
+  const [showMassage, setShowMassage] = useState(false);
   const [highScore, setHighScore] = useState<number>();
   const [show, setShow] = useState(false);
   const [massage, setMassage] = useState("Handle your words");
-  const [handleWordMassage, setHandleWordMassage] = useState<string>("")
+  const [handleWordMassage, setHandleWordMassage] = useState<string>("");
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -46,9 +45,9 @@ const UserPage = () => {
 
   const handleGetUserHighScore = async () => {
     try {
-      console.log("at load userPage the wordList is:", wordList);
       const response: number = await getUserHighScore();
       console.log("at userPage/handleGetAllUserWords the response:", response);
+      console.log("at userPage/handleGetAllUserWords the user in context:", user);
       if (!response && response != 0)
         throw new Error(
           "No response from axios getHighestUserScores at handleGetUserHighScore"
@@ -67,9 +66,9 @@ const UserPage = () => {
     handleGetUserHighScore();
   }, []);
 
-  useEffect(() => {
-    handleGetAllUserWords();
-  }, [show, showPopupUpdateWord]);
+  // useEffect(() => {
+  //   handleGetAllUserWords();
+  // }, [show, showPopupUpdateWord]);
 
   const handleDeleteWord = async (wordId: string) => {
     if (wordId === undefined)
@@ -77,15 +76,15 @@ const UserPage = () => {
     try {
       const response = await deleteUserWordById(wordId);
       console.log("At handleDeleteWord the data is: ", response);
-      const {ok, massage} = response
-      if(ok){
-        setShowMassage(true)
-        setHandleWordMassage(massage)
-        handleGetAllUserWords()
+      const { ok, massage } = response;
+      if (ok) {
+        setShowMassage(true);
+        setHandleWordMassage(massage);
+        handleGetAllUserWords();
         setTimeout(() => {
           setShowMassage(false);
         }, 3000);
-      } 
+      }
       navigate("/UserPage");
     } catch (error) {
       console.error("Error delete word:", error);
@@ -98,29 +97,28 @@ const UserPage = () => {
   };
 
   const handleSuccessfulUpdate = () => {
-    setShowPopupUpdateWord(false); 
+    setShowPopupUpdateWord(false);
   }; //work ok
 
   return (
     <>
       <div className="container">
         <h1>Welcome {user}</h1>
-        <button onClick={handleLogout}>LogOut</button>
         <p>Your Highest Score: {highScore}</p>
-        <button onClick={() => setShowPopupAddWord(true)}>Add new Word</button>
-        {showPopupAddWord && (
-          <Popup onClose={() => setShowPopupAddWord(false)}>
-            <AddWord />
-          </Popup>
-        )}
         <button
           onClick={() => {
-            navigate(`/playGame/:${wordList}`);
+            navigate('/playGame/');
           }}
         >
           Play Now
         </button>
       </div>
+      <button onClick={() => setShowPopupAddWord(true)} style={{ textDecoration: 'line-through' }}>Add new Word</button>
+        {showPopupAddWord && (
+          <Popup onClose={() => setShowPopupAddWord(false)}>
+            <AddWord />
+          </Popup>
+        )}
       <div>
         <button
           onClick={() => {
@@ -128,8 +126,9 @@ const UserPage = () => {
             {
               !show
                 ? setMassage("close session")
-                : setMassage("Handle your words");
+                : setMassage("Settings");
             }
+            handleGetAllUserWords()
           }}
         >
           {massage}
@@ -152,7 +151,10 @@ const UserPage = () => {
                         </button>
                         {showPopupUpdateWord && (
                           <Popup onClose={() => setShowPopupUpdateWord(false)}>
-                            <UpdateWord word={word} onSuccessfulUpdate={handleSuccessfulUpdate}/>
+                            <UpdateWord
+                              word={word}
+                              onSuccessfulUpdate={handleSuccessfulUpdate}
+                            />
                           </Popup>
                         )}
                         <button
@@ -169,6 +171,7 @@ const UserPage = () => {
           </div>
         ) : null}
       </div>
+      <button onClick={handleLogout}>LogOut</button>
     </>
   );
 };
