@@ -2,6 +2,8 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../api/users/userApi";
 import { UserContext } from "../../context/userContext";
+import "../../style/buttons.css";
+import "../../style/form.css";
 //work ok
 const Login = () => {
   const [username, setUsername] = useState<string>("");
@@ -24,7 +26,7 @@ const Login = () => {
         );
         throw new Error("login failed, please register first");
       }
-      setUser(username)
+      setUser(username);
       navigate(`/userPage`);
     } catch (error) {
       console.error(error);
@@ -56,15 +58,17 @@ const Login = () => {
             onInput={(ev) => setPassword((ev.target as HTMLInputElement).value)}
           ></input>
         </div>
-        <button type="submit">Login</button>
+        <button className="login" type="submit">
+          Login
+        </button>
       </form>
       <button
-        className="RegisterFirst"
+        className="register"
         onClick={() => {
           navigate("/register");
         }}
       >
-        Register First
+        Register
       </button>
     </div>
   );

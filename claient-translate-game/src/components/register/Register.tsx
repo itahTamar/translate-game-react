@@ -30,7 +30,7 @@ const Register = () => {
               type="userName"
               name="userName"
               autoComplete="given-name"
-              placeholder="UserName (must be uniq)"
+              placeholder="UserName" //must be uniq
               value={userName}
               onInput={(ev) =>
                 setUserName((ev.target as HTMLInputElement).value)
@@ -50,12 +50,14 @@ const Register = () => {
               }
             ></input>
           </div>
-          <button
+          <button className="registerBtn"
              type="submit"
           >
             Register
           </button>
         </form>
+      
+        <button className="backBtn" onClick={() => navigate('/')}>Back</button>
       </div>
     </>
   );

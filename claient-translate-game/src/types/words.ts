@@ -8,3 +8,4 @@ export interface Word {
 export interface WordObject {
     word: Word
   }
+
