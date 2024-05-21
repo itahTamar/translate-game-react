@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import WordCard from "../components/words/WordCard";
 import { UserContext } from "../context/userContext";
 import { Word } from "../types/words";
-import { getXRandomUserWordByUserId } from "../api/users/wordApi";
+import { getXRandomUserWordByUserId } from "../api/wordApi";
 import { useNavigate } from 'react-router-dom';
 
 const PlayGame = () => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Word } from '../../types/words';
-import { updateWordById } from '../../api/users/wordApi';
+import { updateWordById } from '../../api/wordApi';
 
 interface UpdateWordProps {
     word: Word;

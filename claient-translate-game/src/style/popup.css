@@ -14,7 +14,7 @@
 .popup-inner{
     position: relative;
     padding-top: 1.3rem;
-    height: 18rem;
+    height: 19rem;
     width: 27rem;
     background-color: #FFF;
 
@@ -22,7 +22,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        font-size: 1vw;
+        font-size: 2vw;
         padding: 0 0.5rem;
         background-color: white;
       }

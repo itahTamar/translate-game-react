@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register } from "../../api/users/userApi";
+import { register } from "../../api/userApi";
+import '../../style/buttons.css'
 
 const Register = () => {
   const [userName, setUserName] = useState<string>("");
@@ -26,7 +27,7 @@ const Register = () => {
         <form className="form" onSubmit={handleSubmitRegister}>
           <div className="input_container">
             <div className="icon_container"></div>
-            <input
+            <input className="border border-black m-2"
               type="userName"
               name="userName"
               autoComplete="given-name"
@@ -39,7 +40,7 @@ const Register = () => {
           </div>
           <div className="input_container">
             <div className="icon2_container"></div>
-            <input
+            <input className="border border-black m-2"
               type="password"
               name="password"
               autoComplete="off"

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addWord } from "./../../api/users/wordApi";
+import { addWord } from "./../../api/wordApi";
 
 //work ok
 const AddWord = () => {

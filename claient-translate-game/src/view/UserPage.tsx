@@ -9,7 +9,7 @@ import Cookies from "js-cookie";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
-import { getUserHighScore } from "./../api/users/userApi";
+import { getUserHighScore } from "../api/userApi";
 import Popup from "./../components/popup";
 import AddWord from "./../components/words/AddWord";
 import "../style/buttons.css";
@@ -54,8 +54,8 @@ const UserPage = () => {
   return (
     <>
       <div className="container">
-        <h1>Welcome {user}</h1>
-        <p>Your Highest Score: {highScore}</p>
+        <h1 className="p-4">Welcome {user}</h1>
+        <p className="p-3">Your Highest Score: {highScore}</p>
         <button
           className="play"
           onClick={() => {
@@ -77,7 +77,7 @@ const UserPage = () => {
         </Popup>
       )}
       <div>
-        <button
+        <button className="m-3"
           onClick={() => {
             navigate("/settings");
           }}

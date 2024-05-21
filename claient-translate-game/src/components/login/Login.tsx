@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../api/users/userApi";
+import { login } from "../../api/userApi";
 import { UserContext } from "../../context/userContext";
 import "../../style/buttons.css";
 import "../../style/form.css";
@@ -38,22 +38,22 @@ const Login = () => {
       <form className="form" onSubmit={handleSubmitLogin}>
         <label>User Name</label>
         <div className="input_container">
-          <input
+          <input className="border border-black m-2"
             type="username"
             name="username"
             autoComplete="given-name"
-            placeholder="username"
+            // placeholder="username"
             value={username}
             onInput={(ev) => setUsername((ev.target as HTMLInputElement).value)}
           />
         </div>
         <label>Password</label>
         <div className="input_container">
-          <input
+          <input className="border border-black m-2"
             type="password"
             name="password"
             autoComplete="off"
-            placeholder="Password"
+            // placeholder="Password"
             value={password}
             onInput={(ev) => setPassword((ev.target as HTMLInputElement).value)}
           ></input>
@@ -62,14 +62,14 @@ const Login = () => {
           Login
         </button>
       </form>
-      <button
+      {/* <button
         className="register"
         onClick={() => {
           navigate("/register");
         }}
       >
         Register
-      </button>
+      </button> */}
     </div>
   );
 };
