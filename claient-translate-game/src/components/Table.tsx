@@ -7,6 +7,9 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteDataById } from "../api/generalApi";
+import Popup from "./popup";
+import UpdateWord from "./words/UpdateWord";
+import { Word } from "../types/words";
 
 interface ReactTableProps<T extends object> {
   data: T[];
@@ -39,6 +42,10 @@ export const Table = <T extends object>({
       console.error("Error delete word:", error);
     }
   };
+
+  const handleUpdate = async (cellID: string) => {
+
+  }
 
   const table = useReactTable({
     data,
@@ -78,25 +85,44 @@ export const Table = <T extends object>({
                     className="border-b bg-white border border-slate-200"
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <td
-                        className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900 "
-                        key={cell.id}
+                      <button
+                        onClick={() => handleUpdate(cell.id)}
                       >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </td>
+                        <td
+                          className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900 "
+                          key={cell.id}
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </td>
+                      </button>
+                
                     ))}
-                    <td className="px-6 py-4">
+                    {/* <td className="px-6 py-4">
                       <button
                         className="btn-pencil-img"
                         onClick={() => setShowPopupUpdate(true)}
                       >
                         ✏️
-                      </button>
-                    </td>
-                    <td className="px-6 py-4">  
+                      </button> */}
+                      {showPopupUpdate && (
+                        <Popup onClose={() => setShowPopupUpdate(false)}>
+                          <UpdateWord
+                            word={
+                              {
+                                _id: (row.original as any)._id,
+                                en_word: (row.original as any).en_word,
+                                he_word: (row.original as any).he_word,
+                              } as Word
+                            }
+                            onSuccessfulUpdate={handleSuccessfulUpdate}
+                          />
+                        </Popup>
+                      )}
+                    {/* </td> */}
+                    <td className="px-6 py-4">
                       <button
                         className="btn-garbageCan-img"
                         onClick={() => handleDelete((row.original as any)._id)}
