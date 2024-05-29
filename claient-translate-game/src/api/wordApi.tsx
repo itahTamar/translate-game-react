@@ -50,9 +50,9 @@ export const addWord = async (en_word: string, he_word: string) => {
     try {
         const response = await axios.post(`/api/words/add-word`, {en_word, he_word});
         console.log("At addWord the results:", response)
-        const { ok, words } = response.data;
+        const { ok, words, message } = response.data;
         if (ok) {
-           return words
+           return {words, message}
         } else {
             console.error("Error retrieving words:", response.data.error);
         }
