@@ -9,11 +9,8 @@ export const getAllUserWord = async () => {
         console.log("At getAllUserWordByUserId the response:", response)
         const { ok, words } = response.data;
         console.log("At getAllUserWordByUserId the results:", words)
-
-         if (ok) {
-            const wordsArray = response.data.words.map((item: WordObject) => item.word);
-            console.log("At getAllUserWordByUserId the wordsArray:",wordsArray);
-            return wordsArray;
+        if (ok) {
+            return words;
         } else {
             console.error("Error retrieving words:", response.data.error);
         }

@@ -2,6 +2,7 @@ import {
   getCoreRowModel,
   useReactTable,
   flexRender,
+  createColumnHelper,
 } from "@tanstack/react-table";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
@@ -15,6 +16,15 @@ interface ReactTableProps<T extends object> {
   data: T[];
   columns: ColumnDef<T>[];
 }
+// const columnHelper = createColumnHelper<Word>();
+// const columns = [
+//   columnHelper.accessor('en_word', {
+//     cell: (info) => info.getValue()
+//   }),
+//   columnHelper.accessor('he_word', {
+//     cell: (info) => info.getValue()
+//   }),
+// ]
 
 export const Table = <T extends object>({
   data,
@@ -75,6 +85,8 @@ export const Table = <T extends object>({
                             )}
                       </th>
                     ))}
+                    <th className="px-6 py-4 text-sm font-medium text-gray-900">Update</th>
+                    <th className="px-6 py-4 text-sm font-medium text-gray-900">Delete</th>
                   </tr>
                 ))}
               </thead>
@@ -85,9 +97,9 @@ export const Table = <T extends object>({
                     className="border-b bg-white border border-slate-200"
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <button
-                        onClick={() => handleUpdate(cell.id)}
-                      >
+                      // <button
+                        // onClick={() => handleUpdate(cell.id)}
+                      // >
                         <td
                           className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900 "
                           key={cell.id}
@@ -97,16 +109,16 @@ export const Table = <T extends object>({
                             cell.getContext()
                           )}
                         </td>
-                      </button>
+                      // </button>
                 
                     ))}
-                    {/* <td className="px-6 py-4">
+                    <td className="px-6 py-4">
                       <button
                         className="btn-pencil-img"
                         onClick={() => setShowPopupUpdate(true)}
                       >
                         ✏️
-                      </button> */}
+                      </button>
                       {showPopupUpdate && (
                         <Popup onClose={() => setShowPopupUpdate(false)}>
                           <UpdateWord
@@ -121,7 +133,7 @@ export const Table = <T extends object>({
                           />
                         </Popup>
                       )}
-                    {/* </td> */}
+                    </td>
                     <td className="px-6 py-4">
                       <button
                         className="btn-garbageCan-img"
