@@ -69,7 +69,7 @@ export const Table = <T extends object>({
         <div className="inline-block min-w-full py-4 sm:px-6 lg:px-8">
           <div className="overflow-hidden p-2">
             <table className="min-w-full text-center">
-              <thead className="border-b bg-gray-50">
+              <thead className="border-b bg-gray-50"> {/*the table headers*/}
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
@@ -90,16 +90,13 @@ export const Table = <T extends object>({
                   </tr>
                 ))}
               </thead>
-              <tbody>
+              <tbody> {/*the table row and cell (body)*/}
                 {table.getRowModel().rows.map((row) => (
                   <tr
                     key={row.id}
                     className="border-b bg-white border border-slate-200"
                   >
                     {row.getVisibleCells().map((cell) => (
-                      // <button
-                        // onClick={() => handleUpdate(cell.id)}
-                      // >
                         <td
                           className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900 "
                           key={cell.id}
@@ -109,8 +106,6 @@ export const Table = <T extends object>({
                             cell.getContext()
                           )}
                         </td>
-                      // </button>
-                
                     ))}
                     <td className="px-6 py-4">
                       <button
