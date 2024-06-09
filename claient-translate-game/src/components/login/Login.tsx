@@ -42,7 +42,6 @@ const Login = () => {
             type="username"
             name="username"
             autoComplete="given-name"
-            // placeholder="username"
             value={username}
             onInput={(ev) => setUsername((ev.target as HTMLInputElement).value)}
           />
@@ -53,7 +52,6 @@ const Login = () => {
             type="password"
             name="password"
             autoComplete="off"
-            // placeholder="Password"
             value={password}
             onInput={(ev) => setPassword((ev.target as HTMLInputElement).value)}
           ></input>
@@ -62,14 +60,6 @@ const Login = () => {
           Login
         </button>
       </form>
-      {/* <button
-        className="register"
-        onClick={() => {
-          navigate("/register");
-        }}
-      >
-        Register
-      </button> */}
     </div>
   );
 };

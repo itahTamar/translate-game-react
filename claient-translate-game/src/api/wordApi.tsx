@@ -60,6 +60,7 @@ export const addWord = async (en_word: string, he_word: string) => {
 
 //update word by wordID
 //build in server
+    //old virion
 export const updateWordById = async (word_id:string ,en_word: string, he_word: string ) => {
     try {
         const response = await axios.patch(`/api/words/updateWord/${word_id}`, {en_word, he_word});
@@ -77,6 +78,24 @@ export const updateWordById = async (word_id:string ,en_word: string, he_word: s
         console.error("Error:", (error as Error).message);
     }
 }; //work ok
+
+export const updateWordFieldByWordId = async (words_id:string ,field: string, updateData: string ) => {
+    try {
+        const response = await axios.patch(`/api/words/updateWordFieldByWordId/${words_id}`, {field, updateData});
+        console.log("At updateWordById the response:", response)
+        //response = {ok, response, massage, error?}
+        const { ok, results, massage } = response.data;
+        console.log("At updateWordFieldByWordId the results:", results)
+
+        if (ok) {
+           return {results, massage}
+        } else {
+            console.error("Error retrieving words:", response.data.error);
+        }
+    } catch (error) {
+        console.error("Error:", (error as Error).message);
+    }
+};
 
 //delete-word by wordID
 //build in server
