@@ -84,6 +84,14 @@ const UserPage = () => {
         >
           Settings
         </button>
+        <button
+        onClick={() => {
+          navigate("/tableTest/");
+        }}
+        style={{ textDecoration: "line-through" }}
+      >
+        words table test
+      </button>
       </div>
       <button className="logout" onClick={handleLogout}>
         LogOut

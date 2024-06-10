@@ -5,6 +5,7 @@ import RegisterPage from "../view/RegisterPage"
 import UserPage from "../view/UserPage"
 import PlayGame from "../view/PlayGame"
 import Settings from "../view/Settings"
+import { TableTest } from "../components/TableTest"
 
 export const router = createBrowserRouter([
     {path: "/", element: <LandingPage/>},
@@ -12,6 +13,7 @@ export const router = createBrowserRouter([
     {path: "/login", element: <LogInPage/>},
     {path: "/userPage", element: <UserPage/>},
     {path: "/playGame", element: <PlayGame/>},
-    {path: "/settings", element: <Settings/>}
+    {path: "/settings", element: <Settings/>},
+    {path: "/tableTest", element: <TableTest/>}
 
 ])
