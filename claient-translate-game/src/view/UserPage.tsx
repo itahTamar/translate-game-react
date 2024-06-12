@@ -8,15 +8,12 @@
 import Cookies from "js-cookie";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../context/userContext";
 import { getUserHighScore } from "../api/userApi";
-import Popup from "./../components/popup";
-import AddWord from "./../components/words/AddWord";
+import { UserContext } from "../context/userContext";
 import "../style/buttons.css";
 
 const UserPage = () => {
   const [highScore, setHighScore] = useState<number>();
-  const [showPopupAddWord, setShowPopupAddWord] = useState(false);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
