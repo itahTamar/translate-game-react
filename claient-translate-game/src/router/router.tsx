@@ -13,7 +13,6 @@ export const router = createBrowserRouter([
     {path: "/login", element: <LogInPage/>},
     {path: "/userPage", element: <UserPage/>},
     {path: "/playGame", element: <PlayGame/>},
-    {path: "/settings", element: <Settings/>},
     {path: "/tableTest", element: <TableTest/>}
 
 ])

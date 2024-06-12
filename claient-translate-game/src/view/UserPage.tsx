@@ -66,36 +66,15 @@ const UserPage = () => {
         </button>
       </div>
 
-      <button
-        onClick={() => setShowPopupAddWord(true)}
-        style={{ textDecoration: "line-through" }}
-      >
-        Add new Word
-      </button>
-      {showPopupAddWord && (
-        <Popup onClose={() => setShowPopupAddWord(false)}>
-          <AddWord />
-        </Popup>
-      )}
-
       <div>
         <button className="m-3"
           onClick={() => {
-            navigate("/settings");
+            navigate("/tableTest");
           }}
         >
           Settings
         </button>
 
-        <button
-        onClick={() => {
-          navigate("/tableTest/");
-        }}
-        style={{ textDecoration: "line-through" }}
-      >
-        words table test
-      </button>
-      
       </div>
       <button className="logout" onClick={handleLogout}>
         LogOut
