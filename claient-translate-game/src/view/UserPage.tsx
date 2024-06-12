@@ -65,6 +65,7 @@ const UserPage = () => {
           Play Now
         </button>
       </div>
+
       <button
         onClick={() => setShowPopupAddWord(true)}
         style={{ textDecoration: "line-through" }}
@@ -76,6 +77,7 @@ const UserPage = () => {
           <AddWord />
         </Popup>
       )}
+
       <div>
         <button className="m-3"
           onClick={() => {
@@ -84,6 +86,7 @@ const UserPage = () => {
         >
           Settings
         </button>
+
         <button
         onClick={() => {
           navigate("/tableTest/");
@@ -92,6 +95,7 @@ const UserPage = () => {
       >
         words table test
       </button>
+      
       </div>
       <button className="logout" onClick={handleLogout}>
         LogOut

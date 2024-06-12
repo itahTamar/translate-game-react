@@ -15,10 +15,12 @@ import { Word } from "../types/words";
 import { getAllUserWord, updateWordFieldByWordId } from "../api/wordApi";
 import { useNavigate } from "react-router-dom";
 import Popup from "./popup";
+import { deleteDataById } from "../api/generalApi";
+import AddWord from "./words/AddWord";
 
 // The declare module '@tanstack/react-table' statement is used to declare a module augmentation
-//for the @tanstack/react-table module.
-//This allows you to add new types or interfaces to the module's existing types.
+// for the @tanstack/react-table module.
+// This allows you to add new types or interfaces to the module's existing types.
 declare module "@tanstack/react-table" {
   interface TableMeta<TData extends RowData> {
     updateData: (rowIndex: number, columnId: string, value: unknown) => void; //adjust for your needs and DB
@@ -70,8 +72,11 @@ function useSkipper() {
 export function TableTest() {
   const rerender = React.useReducer(() => ({}), {})[1];
   //being assigned with the dispatch fun' returned by useReduser, used to update and trigger a re-render
+
   const [massageFromUpdate, setMassageFromUpdate] = useState("");
-  const [showPopupUpdateMassage, setShowPopupUpdateMassage] = useState(false);const navigate = useNavigate();
+  const [showPopupUpdateMassage, setShowPopupUpdateMassage] = useState(false);
+  const navigate = useNavigate();
+
   //build up the table columns header
   const columns = React.useMemo<ColumnDef<Word>[]>(
     () => [
@@ -110,18 +115,44 @@ export function TableTest() {
     }
   }; //work ok
 
-  const handleUpdate = async (rowOriginalId: string, columnId: string, value: any) => {
+  const handleUpdate = async (
+    rowOriginalId: string,
+    columnId: string,
+    value: any
+  ) => {
     try {
-      if(!rowOriginalId || !columnId || !value)throw new Error("At handleUpdate: fail catching data from cell");
-      console.log("hello from handleUpdate")
-      const response = await updateWordFieldByWordId(rowOriginalId, columnId, value)
-      if (!response) throw new Error("At handleUpdate: filed catching response from axios");
-      setShowPopupUpdateMassage(true)
-      setMassageFromUpdate(response.massage) 
+      if (!rowOriginalId || !columnId || !value)
+        throw new Error("At handleUpdate: fail catching data from cell");
+      console.log("hello from handleUpdate");
+      const response = await updateWordFieldByWordId(
+        rowOriginalId,
+        columnId,
+        value
+      );
+      if (!response)
+        throw new Error("At handleUpdate: filed catching response from axios");
+      setShowPopupUpdateMassage(true);
+      setMassageFromUpdate(response.massage);
     } catch (error) {
-        console.error("Error:", (error as Error).message);
+      console.error("Error:", (error as Error).message);
     }
-  }
+  }; //work ok
+
+  const handleDelete = async (rowOriginalId: string) => {
+    if (rowOriginalId === undefined)
+      throw new Error("At table/handleDelete, rowOriginalId is undefined");
+    try {
+      const response = await deleteDataById(rowOriginalId);
+      console.log("At handleDeleteWord the data is: ", response);
+      const { ok, massage } = response;
+      if (ok) {
+        alert(massage);
+      }
+      refreshData()
+    } catch (error) {
+      console.error("Error delete word:", error);
+    }
+  }; //work ok
 
   useEffect(() => {
     handleGetAllUserWords();
@@ -147,8 +178,8 @@ export function TableTest() {
         setData((old) =>
           old.map((row, index) => {
             if (index === rowIndex) {
-                handleUpdate(row._id, columnId, value)  //handling sending the update data to the server for DB-saving //!not working
-                return {
+              handleUpdate(row._id, columnId, value); //handling sending the update data to the server for DB-saving //!not working
+              return {
                 ...old[rowIndex]!,
                 //Take the value at the rowIndex index from the old array,
                 // and use it as is, without checking if it's null or undefined.
@@ -165,13 +196,27 @@ export function TableTest() {
 
   return (
     <>
-      <button className="absolute top-16 left-16" onClick={() => navigate("/userPage")}>
-        Back
-      </button>
-      {showPopupUpdateMassage ? <Popup onClose={() => setShowPopupUpdateMassage(false)} children={massageFromUpdate}/> : null}
+      <div>
+        <button
+          className="absolute top-8 left-16"
+          onClick={() => navigate("/userPage")}
+        >
+          Back
+        </button>
+
+        <h1>Your Vocabulary</h1>
+      </div>
+      {showPopupUpdateMassage ? (
+        <Popup
+          onClose={() => setShowPopupUpdateMassage(false)}
+          children={massageFromUpdate}
+        />
+      ) : null}
+
       <div className="p-2">
-        <table>
-          <thead>{/* set the table header */}   
+      <table>
+          <thead>
+            {/* set the table header */}
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -198,7 +243,10 @@ export function TableTest() {
             ))}
           </thead>
 
-          <tbody>{/*set the body of the table */}
+          {/* <div className=""><AddWord/></div> */}
+          
+          <tbody>
+            {/*set the body of the table */}
             {/*set the row */}
             {table.getRowModel().rows.map((row) => {
               return (
@@ -208,7 +256,7 @@ export function TableTest() {
                     return (
                       <td key={cell.id}>
                         {/*The flexRender function is used to render the cell using the template of your choice. 
-                      It will handle all possible cell definition scenarios for the cell object (string, JSX, fun')*/}
+                          It will handle all possible cell definition scenarios for the cell object (string, JSX, fun')*/}
                         {flexRender(
                           cell.column.columnDef.cell, //This is the cell definition for the column
                           cell.getContext() //This returns the rendering context (or props) for the cell-based component
@@ -216,11 +264,21 @@ export function TableTest() {
                       </td>
                     );
                   })}
+                  <td className="px-6 py-0.5">
+                    <button
+                      className="btn-garbageCan-img"
+                      onClick={() => handleDelete((row.original as any)._id)}
+                    >
+                      🗑️
+                    </button>
+                  </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
+
+        <div className=""><AddWord refreshData={refreshData}/></div>
 
         <div className="h-2" />
         <div className="flex items-center gap-2">

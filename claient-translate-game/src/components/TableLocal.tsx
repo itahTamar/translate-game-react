@@ -80,10 +80,6 @@ export const TableLocal = <T extends object>({dataOriginal}: ReactTableProps<T>)
     }
   ],[])
 
-  // const handleSuccessfulUpdate = () => {
-  //   setShowPopupUpdate(false);
-  // }; //work ok
-
   const handleDelete = async (rowOriginalId: string) => {
     if (rowOriginalId === undefined)
       throw new Error("At table/handleDelete, rowOriginalId is undefined");
@@ -110,7 +106,7 @@ export const TableLocal = <T extends object>({dataOriginal}: ReactTableProps<T>)
     } catch (error) {
         console.error("Error:", (error as Error).message);
     }
-  }
+  } //work ok
   
   //define a table using "react table library" hook 
   const table = useReactTable({
