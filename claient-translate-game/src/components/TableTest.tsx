@@ -73,8 +73,6 @@ export function TableTest() {
   const rerender = React.useReducer(() => ({}), {})[1];
   //being assigned with the dispatch fun' returned by useReduser, used to update and trigger a re-render
 
-  const [massageFromUpdate, setMassageFromUpdate] = useState("");
-  const [showPopupUpdateMassage, setShowPopupUpdateMassage] = useState(false);
   const navigate = useNavigate();
 
   //build up the table columns header
@@ -109,7 +107,6 @@ export function TableTest() {
           "No response from axios getAllUserWord at handleGetAllUserWords"
         );
       setData(response);
-      //   setFilterWordsList(response);
     } catch (error) {
       console.error(error);
     }
@@ -123,7 +120,6 @@ export function TableTest() {
     try {
       if (!rowOriginalId || !columnId || !value)
         throw new Error("At handleUpdate: fail catching data from cell");
-      console.log("hello from handleUpdate");
       const response = await updateWordFieldByWordId(
         rowOriginalId,
         columnId,
@@ -131,8 +127,7 @@ export function TableTest() {
       );
       if (!response)
         throw new Error("At handleUpdate: filed catching response from axios");
-      setShowPopupUpdateMassage(true);
-      setMassageFromUpdate(response.massage);
+      console.log(response.massage);
     } catch (error) {
       console.error("Error:", (error as Error).message);
     }
@@ -145,9 +140,7 @@ export function TableTest() {
       const response = await deleteDataById(rowOriginalId);
       console.log("At handleDeleteWord the data is: ", response);
       const { ok, massage } = response;
-      if (ok) {
-        alert(massage);
-      }
+      if (!ok) throw new Error("problem delete the word");
       refreshData()
     } catch (error) {
       console.error("Error delete word:", error);
@@ -206,13 +199,7 @@ export function TableTest() {
 
         <h1>Your Vocabulary</h1>
       </div>
-      {showPopupUpdateMassage ? (
-        <Popup
-          onClose={() => setShowPopupUpdateMassage(false)}
-          children={massageFromUpdate}
-        />
-      ) : null}
-
+      
       <div className="p-2">
       <table>
           <thead>
@@ -242,8 +229,6 @@ export function TableTest() {
               </tr>
             ))}
           </thead>
-
-          {/* <div className=""><AddWord/></div> */}
           
           <tbody>
             {/*set the body of the table */}
@@ -343,12 +328,12 @@ export function TableTest() {
           </select>
         </div>
         <div>{table.getRowModel().rows.length} Rows</div>
-        <div>
+        {/* <div>
           <button onClick={() => rerender()}>Force Rerender</button>
         </div>
         <div>
           <button onClick={() => refreshData()}>Refresh Data</button>
-        </div>
+        </div> */}
       </div>
     </>
   );
