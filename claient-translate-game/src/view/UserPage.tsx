@@ -8,40 +8,40 @@
 import Cookies from "js-cookie";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserHighScore } from "../api/userApi";
+// import { getUserHighScore } from "../api/userApi";
 import { UserContext } from "../context/userContext";
 import "../style/buttons.css";
 
 const UserPage = () => {
-  const [highScore, setHighScore] = useState<number>();
+  // const [highScore, setHighScore] = useState<number>();
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const handleGetUserHighScore = async () => {
-    try {
-      const response: number = await getUserHighScore();
-      console.log("at userPage/handleGetUserHighScore the response:", response);
-      console.log(
-        "at userPage/handleGetUserHighScore the user in context:",
-        user
-      );
-      if (!response && response != 0)
-        throw new Error(
-          "No response from axios getHighestUserScores at handleGetUserHighScore"
-        );
-      setHighScore(response);
-      console.log(
-        "at userPage/handleGetUserHighScore the highScore:",
-        highScore
-      );
-    } catch (error) {
-      console.error(error, "at handleGetUserHighScore got a catch");
-    }
-  }; //work ok
+  // const handleGetUserHighScore = async () => {
+  //   try {
+  //     const response: number = await getUserHighScore();
+  //     console.log("at userPage/handleGetUserHighScore the response:", response);
+  //     console.log(
+  //       "at userPage/handleGetUserHighScore the user in context:",
+  //       user
+  //     );
+  //     if (!response && response != 0)
+  //       throw new Error(
+  //         "No response from axios getHighestUserScores at handleGetUserHighScore"
+  //       );
+  //     setHighScore(response);
+  //     console.log(
+  //       "at userPage/handleGetUserHighScore the highScore:",
+  //       highScore
+  //     );
+  //   } catch (error) {
+  //     console.error(error, "at handleGetUserHighScore got a catch");
+  //   }
+  // }; //work ok
 
-  useEffect(() => {
-    handleGetUserHighScore();
-  }, []);
+  // useEffect(() => {
+  //   handleGetUserHighScore();
+  // }, []);
 
   const handleLogout = () => {
     Cookies.remove("user");
@@ -52,7 +52,7 @@ const UserPage = () => {
     <>
       <div className="container">
         <h1 className="p-4">Welcome {user}</h1>
-        <p className="p-3">Your Highest Score: {highScore}</p>
+        {/* <p className="p-3">Your Highest Score: {highScore}</p> */}
         <button
           className="play"
           onClick={() => {
