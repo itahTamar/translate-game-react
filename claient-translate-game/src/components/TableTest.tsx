@@ -12,8 +12,9 @@ import {
   RowData,
 } from "@tanstack/react-table";
 import { Word } from "../types/words";
-import { getAllUserWord } from "../api/wordApi";
+import { getAllUserWord, updateWordFieldByWordId } from "../api/wordApi";
 import { useNavigate } from "react-router-dom";
+import Popup from "./popup";
 
 // The declare module '@tanstack/react-table' statement is used to declare a module augmentation
 //for the @tanstack/react-table module.
@@ -40,7 +41,6 @@ const defaultColumn: Partial<ColumnDef<Word>> = {
     React.useEffect(() => {
       setValue(initialValue);
     }, [initialValue]);
-
     return (
       <input
         value={value as string}
@@ -70,7 +70,8 @@ function useSkipper() {
 export function TableTest() {
   const rerender = React.useReducer(() => ({}), {})[1];
   //being assigned with the dispatch fun' returned by useReduser, used to update and trigger a re-render
-  const navigate = useNavigate();
+  const [massageFromUpdate, setMassageFromUpdate] = useState("");
+  const [showPopupUpdateMassage, setShowPopupUpdateMassage] = useState(false);const navigate = useNavigate();
   //build up the table columns header
   const columns = React.useMemo<ColumnDef<Word>[]>(
     () => [
@@ -109,7 +110,18 @@ export function TableTest() {
     }
   }; //work ok
 
-  
+  const handleUpdate = async (rowOriginalId: string, columnId: string, value: any) => {
+    try {
+      if(!rowOriginalId || !columnId || !value)throw new Error("At handleUpdate: fail catching data from cell");
+      console.log("hello from handleUpdate")
+      const response = await updateWordFieldByWordId(rowOriginalId, columnId, value)
+      if (!response) throw new Error("At handleUpdate: filed catching response from axios");
+      setShowPopupUpdateMassage(true)
+      setMassageFromUpdate(response.massage) 
+    } catch (error) {
+        console.error("Error:", (error as Error).message);
+    }
+  }
 
   useEffect(() => {
     handleGetAllUserWords();
@@ -135,7 +147,8 @@ export function TableTest() {
         setData((old) =>
           old.map((row, index) => {
             if (index === rowIndex) {
-              return {
+                handleUpdate(row._id, columnId, value)  //handling sending the update data to the server for DB-saving //!not working
+                return {
                 ...old[rowIndex]!,
                 //Take the value at the rowIndex index from the old array,
                 // and use it as is, without checking if it's null or undefined.
@@ -155,10 +168,10 @@ export function TableTest() {
       <button className="absolute top-16 left-16" onClick={() => navigate("/userPage")}>
         Back
       </button>
+      {showPopupUpdateMassage ? <Popup onClose={() => setShowPopupUpdateMassage(false)} children={massageFromUpdate}/> : null}
       <div className="p-2">
         <table>
-          <thead>
-            {/* set the table header */}
+          <thead>{/* set the table header */}   
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -185,8 +198,7 @@ export function TableTest() {
             ))}
           </thead>
 
-          <tbody>
-            {/*set the body of the table */}
+          <tbody>{/*set the body of the table */}
             {/*set the row */}
             {table.getRowModel().rows.map((row) => {
               return (

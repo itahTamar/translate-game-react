@@ -81,16 +81,16 @@ export const updateWordById = async (word_id:string ,en_word: string, he_word: s
 
 export const updateWordFieldByWordId = async (words_id:string ,field: string, updateData: string ) => {
     try {
-        const response = await axios.patch(`/api/words/updateWordFieldByWordId/${words_id}`, {field, updateData});
-        console.log("At updateWordById the response:", response)
+        const results = await axios.patch(`/api/words/updateWordFieldByWordId/${words_id}`, {field, updateData});
+        console.log("At updateWordFieldByWordId the response:", results)
         //response = {ok, response, massage, error?}
-        const { ok, results, massage } = response.data;
-        console.log("At updateWordFieldByWordId the results:", results)
+        const { ok, response, massage } = results.data;
+        console.log("At updateWordFieldByWordId the results:", response)
 
         if (ok) {
-           return {results, massage}
+           return {response, massage}
         } else {
-            console.error("Error retrieving words:", response.data.error);
+            console.error("Error retrieving words:", results.data.error);
         }
     } catch (error) {
         console.error("Error:", (error as Error).message);
