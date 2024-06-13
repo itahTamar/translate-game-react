@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from "react";
-import "../style/table.css";
 import {
   Column,
-  Table,
   ColumnDef,
-  useReactTable,
+  RowData,
+  Table,
+  flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
-  flexRender,
-  RowData,
+  useReactTable,
 } from "@tanstack/react-table";
-import { Word } from "../types/words";
-import { getAllUserWord, updateWordFieldByWordId } from "../api/wordApi";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Popup from "./popup";
 import { deleteDataById } from "../api/generalApi";
+import { getAllUserWord, updateWordFieldByWordId } from "../api/wordApi";
+import "../style/table.css";
+import { Word } from "../types/words";
 import AddWord from "./words/AddWord";
 
 // The declare module '@tanstack/react-table' statement is used to declare a module augmentation
@@ -70,7 +69,7 @@ function useSkipper() {
 }
 
 export function TableTest() {
-  const rerender = React.useReducer(() => ({}), {})[1];
+  // const rerender = React.useReducer(() => ({}), {})[1];
   //being assigned with the dispatch fun' returned by useReduser, used to update and trigger a re-render
 
   const navigate = useNavigate();
@@ -139,7 +138,7 @@ export function TableTest() {
     try {
       const response = await deleteDataById(rowOriginalId);
       console.log("At handleDeleteWord the data is: ", response);
-      const { ok, massage } = response;
+      const { ok } = response;
       if (!ok) throw new Error("problem delete the word");
       refreshData()
     } catch (error) {
@@ -167,11 +166,10 @@ export function TableTest() {
         // Skip page index reset until after next rerender
         skipAutoResetPageIndex();
         //updating the data in the table by setting a new value for a specific column and row
-        //!the data update locally and not send to the project server nor DB
         setData((old) =>
           old.map((row, index) => {
             if (index === rowIndex) {
-              handleUpdate(row._id, columnId, value); //handling sending the update data to the server for DB-saving //!not working
+              handleUpdate(row._id, columnId, value); //handling sending the update data to the server for DB-saving 
               return {
                 ...old[rowIndex]!,
                 //Take the value at the rowIndex index from the old array,
@@ -252,7 +250,12 @@ export function TableTest() {
                   <td className="px-6 py-0.5">
                     <button
                       className="btn-garbageCan-img"
-                      onClick={() => handleDelete((row.original as any)._id)}
+                      onClick={() => {
+                        const result = confirm("Delete this word?")
+                        if (result) {
+                          handleDelete((row.original as any)._id)
+                        }
+                      }}
                     >
                       🗑️
                     </button>

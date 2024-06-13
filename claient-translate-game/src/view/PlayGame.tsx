@@ -11,7 +11,8 @@ import { useNavigate } from 'react-router-dom';
 const PlayGame = () => {
   const [score, setScore] = useState(0); //when the user chose the correct word the score increase with 1 point
   const [wordList, setWordList] = useState<Word[]>([]);
-  const [showMassage, setShowMassage] = useState("");
+  const [message, setMessage] = useState("");
+  const [showMessage, setShowMessage] = useState(false);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -52,12 +53,14 @@ const PlayGame = () => {
     console.log("at PlayGame/checkMatch the wordList:", wordList);
 
     if (wordList[random]._id === wordList[numberOfWord]._id) {
-      setShowMassage("Correct answer!");
+      setMessage("Correct answer!");
+      displayMessage()
       wordList.splice(random, 1);
       console.log("at PlayGame/checkMatch the wordList:", wordList);
       setScore(score + 1);
     } else {
-      setShowMassage("Wrong answer!");
+      setMessage("Wrong answer!");
+      displayMessage()
       const shuffledArray = shuffle(wordList); 
       console.log("at PlayGame/checkMatch the shuffledArray:", shuffledArray);
       setWordList(shuffledArray) 
@@ -72,25 +75,38 @@ const PlayGame = () => {
     LoadWords();
   }, []);
 
+  useEffect(() => {
+    if (showMessage) {
+      const timer = setTimeout(() => {
+        setShowMessage(false);
+      }, 1000);
+      return () => clearTimeout(timer); // Clean up the timer on component unmount
+    }
+  }, [showMessage]);
+
+  const displayMessage = () => {
+    setShowMessage(true);
+  };
+
   return (
     <>
-      <div className="game">
-        <div className="wrapper">
-          <h1 className="username">Hello {user}</h1>
+      <div className="game h-screen">
+      <h1 className="username relative top-16">Hello {user}</h1>
+      <div className="wrapper relative mt-24">
           <h4 className="instruction">Match the word to its meaning</h4>
-          <p>your score: {score}</p>
-          <div className="wrapper">
-            <div className="massage">{showMassage}</div>
+          <p className="pt-4">your score: {score}</p>
+          <div className="second-wrapper mt-20">
+            {showMessage && <div className="massage pb-2">{message}</div>}
             <div className="cards" id="cards">
-              <WordCard word={wordList[random]} label="EN" />
-              <div className="cards_he">
-                <button onClick={() => checkMatch(0)}>
+              <span className="text-3xl"><WordCard word={wordList[random]} label="EN" /></span>
+              <div className="cards_he mt-3">
+                <button className="m-4 text-xl" onClick={() => checkMatch(0)}>
                   <WordCard word={wordList[0]} label="HE" />
                 </button>
-                <button onClick={() => checkMatch(1)}>
+                <button className="m-4 text-xl" onClick={() => checkMatch(1)}>
                   <WordCard word={wordList[1]} label="HE" />
                 </button>
-                <button onClick={() => checkMatch(2)}>
+                <button className="m-4 text-xl" onClick={() => checkMatch(2)}>
                   <WordCard word={wordList[2]} label="HE" />
                 </button>
               </div>
