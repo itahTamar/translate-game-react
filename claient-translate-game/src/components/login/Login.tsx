@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../../api/userApi";
 import { UserContext } from "../../context/userContext";
 import "../../style/buttons.css";
-import "../../style/form.css";
 //work ok
 const Login = () => {
   const [username, setUsername] = useState<string>("");
@@ -34,27 +33,37 @@ const Login = () => {
   };
 
   return (
-    <div className="form-container">
+    <div>
       <form className="form" onSubmit={handleSubmitLogin}>
-        <label>User Name</label>
-        <div className="input_container">
-          <input className="border border-black m-2"
-            type="username"
-            name="username"
-            autoComplete="given-name"
-            value={username}
-            onInput={(ev) => setUsername((ev.target as HTMLInputElement).value)}
-          />
+        <div className="m-6">
+          <label className="text-2xl">Please enter your User Name</label>
+          <div className="input_container">
+            <input
+              className="border border-black m-2"
+              type="username"
+              name="username"
+              autoComplete="given-name"
+              value={username}
+              onInput={(ev) =>
+                setUsername((ev.target as HTMLInputElement).value)
+              }
+            />
+          </div>
         </div>
-        <label>Password</label>
-        <div className="input_container">
-          <input className="border border-black m-2"
-            type="password"
-            name="password"
-            autoComplete="off"
-            value={password}
-            onInput={(ev) => setPassword((ev.target as HTMLInputElement).value)}
-          ></input>
+        <div className="m-6">
+          <label className="text-2xl">Please enter your Password</label>
+          <div className="input_container">
+            <input
+              className="border border-black m-2 "
+              type="password"
+              name="password"
+              autoComplete="off"
+              value={password}
+              onInput={(ev) =>
+                setPassword((ev.target as HTMLInputElement).value)
+              }
+            ></input>
+          </div>
         </div>
         <button className="login" type="submit">
           Login

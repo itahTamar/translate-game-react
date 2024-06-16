@@ -4,7 +4,7 @@
 }
 
 .registerBtn {
-    margin-top: 1rem;
+    margin-top: 5rem;
 }
 
 .back {
@@ -13,10 +13,10 @@
     left: 1rem;  
 }
 
-.backBtn {
+/* .backBtn {
     position: relative;
     top: 10rem;
-}
+} */
 
 .login {
     margin-top: 2rem;

@@ -9,9 +9,8 @@ export const register = async (userName: string, password: string) => {
         const response = await axios.post("/api/users/register", { userName, password})
         console.log("at user-api register response from server is:", response.data.ok)
         if (!response.data.ok){
-            alert("chose a different username")
-            throw new Error(response.data);
-            
+            alert("This username is already exist, sign-in or choose a different username")
+            throw new Error(response.data);  
         }
         return response.data
         

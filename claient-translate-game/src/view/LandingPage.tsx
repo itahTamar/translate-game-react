@@ -31,7 +31,7 @@ const LandingPage = () => {
         </button>
       </div>
 
-      <p>Practice your english in a fun vocabulary game</p>
+      <p className="">Practice your vocabulary</p>
     </div>
   );
 };
