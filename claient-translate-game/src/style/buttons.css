@@ -28,3 +28,15 @@
     right: 0.5rem;
     border-radius: 50%;
 }
+
+.emoji-button {
+    position: relative;
+    display: inline-block;
+    font-size: 2rem;
+    padding: 0em 0em;
+    margin: 0;
+    border: 0px;
+    background-color: white;
+}
+
+  

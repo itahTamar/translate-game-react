@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../api/userApi";
 import "../../style/buttons.css";
+import "../../style/register.css";
 
 const Register = () => {
   const [userName, setUserName] = useState<string>("");
@@ -11,6 +12,7 @@ const Register = () => {
   const [visible, setVisible] = useState(false);
   const [visibleConfirm, setVisibleConfirm] = useState(false);
   const [match, setMatch] = useState(false);
+  const [timeoutId, setTimeoutId] = useState<number | null>(null);
 
   const validate = () => {
     if (password == confirmPassword) {
@@ -41,6 +43,30 @@ const Register = () => {
     }
   };
 
+  const toggleVisibility = (type: "password" | "confirmPassword") => {
+    if (timeoutId) clearTimeout(timeoutId);
+
+    if (type === "password") {
+      setVisible((prevVisible) => {
+        if (!prevVisible) {
+          const id = setTimeout(() => setVisible(false), 2000);
+          setTimeoutId(id);
+        }
+        return !prevVisible;
+      });
+      setVisibleConfirm(false);
+    } else if (type === "confirmPassword") {
+      setVisibleConfirm((prevVisibleConfirm) => {
+        if (!prevVisibleConfirm) {
+          const id = setTimeout(() => setVisibleConfirm(false), 2000);
+          setTimeoutId(id);
+        }
+        return !prevVisibleConfirm;
+      });
+      setVisible(false);
+    }
+  };
+
   return (
     <>
       <div className="h-screen w-screen">
@@ -52,7 +78,7 @@ const Register = () => {
         </button>
 
         <form className="relative top-64" onSubmit={handleSubmitRegister}>
-          <div className="input_container">
+          <div className="">
             <div className="icon_container"></div>
             <input
               className="border border-black m-2 text-2xl"
@@ -67,10 +93,9 @@ const Register = () => {
             />
           </div>
 
-          <div className="input_container">
-            <div className="icon2_container"></div>
+          <div className="relative left-4">
             <input
-              className="border border-black m-2 text-2xl"
+              className="border border-black m-2 text-2xl mx-0"
               type={visible ? "text" : "password"}
               id="password"
               name="password"
@@ -81,15 +106,22 @@ const Register = () => {
                 setPassword((ev.target as HTMLInputElement).value)
               }
             ></input>
-            <button type="button" className="" onClick={() => setVisible(!visible)}></button>
+            <button
+              type="button"
+              className="emoji-button"
+              onClick={() => toggleVisibility("password")}
+              // onClick={() => setVisible(!visible)}
+            >
+              <span className="emoji">&#128065;</span>
+              {visible ? <span className="slash">/</span> : null}
+            </button>
             {/* <p>chose password as you wish</p> */}
           </div>
-          
 
-          <div>
+          <div className="relative left-4">
             <input
-              className="border border-black m-2 text-2xl"
-              type={visibleConfirm ? "text" : "confirmPassword"}
+              className="border border-black m-2 text-2xl mx-0"
+              type={visibleConfirm ? "text" : "password"}
               id="confirmPassword"
               value={confirmPassword}
               name="confirmPassword"
@@ -99,10 +131,18 @@ const Register = () => {
                 setConfirmPassword((ev.target as HTMLInputElement).value)
               }
             ></input>
+            <button
+              type="button"
+              className="emoji-button"
+              onClick={() => toggleVisibility("confirmPassword")}
+              // onClick={() => setVisibleConfirm(!visibleConfirm)}
+            >
+              <span className="emoji">&#128065;</span>
+              {visibleConfirm ? <span className="slash">/</span> : null}
+            </button>
           </div>
-          <button type="button" className="" onClick={() => setVisibleConfirm(!visibleConfirm)}>SEE</button>
 
-          <p>{!match ? "password not matched!" : null}</p>
+          <p>{!match ? "password are not matched!" : null}</p>
           <button className="registerBtn" type="submit">
             Register
           </button>

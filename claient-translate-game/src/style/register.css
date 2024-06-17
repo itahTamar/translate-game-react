@@ -1,0 +1,12 @@
+.emoji {
+    display: inline-block;
+  }
+  
+  .slash {
+    position: absolute;
+    top: -1px;
+    left: 38%;
+    transform: translate(0%, 0) rotate(20deg);
+    color: red;
+    font-size: 1em;
+  }
