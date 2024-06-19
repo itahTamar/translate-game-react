@@ -10,3 +10,9 @@
     color: red;
     font-size: 1em;
   }
+
+  .register-container {
+    background-image: url("images/words5.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }

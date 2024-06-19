@@ -69,7 +69,7 @@ const Register = () => {
 
   return (
     <>
-      <div className="h-screen w-screen">
+      <div className="h-screen w-screen register-container">
         <button
           className="absolute top-8 left-16"
           onClick={() => navigate("/")}
@@ -108,7 +108,7 @@ const Register = () => {
             ></input>
             <button
               type="button"
-              className="emoji-button"
+              className="emoji-button visible"
               onClick={() => toggleVisibility("password")}
               // onClick={() => setVisible(!visible)}
             >
@@ -133,7 +133,7 @@ const Register = () => {
             ></input>
             <button
               type="button"
-              className="emoji-button"
+              className="emoji-button visible"
               onClick={() => toggleVisibility("confirmPassword")}
               // onClick={() => setVisibleConfirm(!visibleConfirm)}
             >

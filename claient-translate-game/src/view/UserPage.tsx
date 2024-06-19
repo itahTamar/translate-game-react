@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 // import { getUserHighScore } from "../api/userApi";
 import { UserContext } from "../context/userContext";
 import "../style/buttons.css";
+import "../style/userPage.css";
 
 const UserPage = () => {
   // const [highScore, setHighScore] = useState<number>();
@@ -50,32 +51,36 @@ const UserPage = () => {
 
   return (
     <>
-      <div className="container">
-        <h1 className="p-4">Welcome {user}</h1>
-        {/* <p className="p-3">Your Highest Score: {highScore}</p> */}
-        <button
-          className="play"
-          onClick={() => {
-            navigate("/playGame/");
-          }}
-        >
-          Play Now
-        </button>
-      </div>
+      <div className="userPage-container">
+        <h1 className="p-4 font-bold text-orange-300 text-7xl drop-shadow-2xl">Welcome {user}</h1>
+        <button className="logout" onClick={handleLogout}>
+            LogOut
+          </button>
+        <div className="inner-container">
+          <div>
+            {/* <p className="p-3">Your Highest Score: {highScore}</p> */}
+            <button
+              className="play text-2xl rounded-3xl"
+              onClick={() => {
+                navigate("/playGame/");
+              }}
+            >
+              Play Now
+            </button>
+          </div>
 
-      <div>
-        <button className="m-3"
-          onClick={() => {
-            navigate("/tableTest");
-          }}
-        >
-          Settings
-        </button>
-
+          <div className="relative t-8">
+            <button
+              className="m-3"
+              onClick={() => {
+                navigate("/tableTest");
+              }}
+            >
+              Settings
+            </button>
+          </div>
+        </div>
       </div>
-      <button className="logout" onClick={handleLogout}>
-        LogOut
-      </button>
     </>
   );
 };
