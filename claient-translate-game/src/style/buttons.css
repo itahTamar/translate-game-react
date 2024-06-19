@@ -39,4 +39,10 @@
     background-color: white;
 }
 
+.visible {
+    right: 2rem;
+    top: 0.2rem;
+    background-color: transparent;
+}
+
   

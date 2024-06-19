@@ -81,7 +81,7 @@ const Register = () => {
           <div className="">
             <div className="icon_container"></div>
             <input
-              className="border border-black m-2 text-2xl"
+              className="border border-black m-2 text-xl w-72"
               type="userName"
               name="userName"
               autoComplete="given-name"
@@ -95,7 +95,7 @@ const Register = () => {
 
           <div className="relative left-4">
             <input
-              className="border border-black m-2 text-2xl mx-0"
+              className="border border-black m-2 text-xl mx-0 w-72"
               type={visible ? "text" : "password"}
               id="password"
               name="password"
@@ -120,7 +120,7 @@ const Register = () => {
 
           <div className="relative left-4">
             <input
-              className="border border-black m-2 text-2xl mx-0"
+              className="border border-black m-2 text-xl mx-0 w-72"
               type={visibleConfirm ? "text" : "password"}
               id="confirmPassword"
               value={confirmPassword}
@@ -143,8 +143,8 @@ const Register = () => {
           </div>
 
           <p>{!match ? "password are not matched!" : null}</p>
-          <button className="registerBtn" type="submit">
-            Register
+          <button className="registerBtn text-xl" type="submit">
+            Continue
           </button>
         </form>
       </div>

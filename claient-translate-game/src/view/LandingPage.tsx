@@ -10,8 +10,8 @@ const LandingPage = () => {
   const [showPopupLogin, setShowPopupLogin] = useState(false);
 
   return (
-    <div className="open-page">
-      <div className="container">
+    // <div className="open-page">
+      <div className="landingPage-container">
         <h1 className="text-7xl mb-20 font-bold">Vocabulary Game</h1>
         <h2 className="text-3xl mb-5">Practice your vocabulary</h2>
 
@@ -38,7 +38,7 @@ const LandingPage = () => {
           </button>
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 
