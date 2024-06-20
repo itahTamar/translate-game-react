@@ -52,7 +52,7 @@ const Login = () => {
         <h1 className="text-4xl pb-5">Welcome Guest</h1>
         <div className="m-6">
           <label className="text-2xl">Please enter your UserName</label>
-          <div className="input_container">
+          <div>
             <input
               className="border border-black m-2 rounded-2xl w-72 indent-4"
               type="username"
@@ -68,7 +68,7 @@ const Login = () => {
 
         <div className="m-6">
           <label className="text-2xl">Please enter your Password</label>
-          <div className="input_container">
+          <div>
             <input
               className="border border-black m-2 rounded-2xl w-72 relative left-4 indent-4"
               type={visible ? "text" : "password"}
