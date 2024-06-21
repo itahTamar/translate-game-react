@@ -236,7 +236,7 @@ export function TableTest() {
                     {/*set the cell in the row*/}
                     {row.getVisibleCells().map((cell) => {
                       return (
-                        <td key={cell.id} className="text-xl">
+                        <td key={cell.id} className="text-xl indented-input">
                           {/*The flexRender function is used to render the cell using the template of your choice. 
                           It will handle all possible cell definition scenarios for the cell object (string, JSX, fun')*/}
                           {flexRender(

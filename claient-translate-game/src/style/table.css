@@ -39,4 +39,8 @@ html {
     background-repeat: no-repeat; */
     /* background-color: rgb(0, 149, 255); */
   }
+
+  .indented-input input {
+    text-indent: 5rem;
+  }
   
