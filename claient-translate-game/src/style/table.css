@@ -44,3 +44,6 @@ html {
     text-indent: 5rem;
   }
   
+  td {
+    padding: 0.7rem;
+  }
