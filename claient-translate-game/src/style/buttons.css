@@ -13,11 +13,6 @@
     left: 1rem;  
 }
 
-/* .backBtn {
-    position: relative;
-    top: 10rem;
-} */
-
 .login {
     margin-top: 2rem;
 }
@@ -43,6 +38,11 @@
     right: 2rem;
     top: 0.2rem;
     background-color: transparent;
+}
+
+.btn-garbageCan-img{
+    background-color: transparent;
+    font-size: larger;
 }
 
   

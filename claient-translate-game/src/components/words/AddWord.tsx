@@ -34,16 +34,18 @@ const AddWord: FC<AddWordProps> = ({ refreshData }) => {
       <div className="form-container">
         <form onSubmit={handleAddWord} className="form">
           <input
+          className="relative right-2 w-56"
             type="text"
             placeholder="English Word"
             onInput={(ev) => setEnWord((ev.target as HTMLInputElement).value)}
           ></input>
           <input
+            className="relative w-56"
             type="text"
             placeholder="Hebrew Word"
             onInput={(ev) => setHeWord((ev.target as HTMLInputElement).value)}
           ></input>
-          <button type="submit">Save</button>
+          <button className="relative left-2.5 h-9 mt-1 py-1" type="submit">Add Word</button>
         </form>
       </div>
     </>
