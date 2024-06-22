@@ -25,3 +25,51 @@
     font-size: 2.2rem;
     font-weight: 600;
 }
+
+@media only screen and (max-width: 640px) {
+    /* Common styles for both cards */
+    .card {
+        height: 5rem;
+        width: 7rem;
+        font-size: 2rem;
+        text-align: center;
+        line-height: 5rem;
+    }
+
+    /* Styles specific to Hebrew words */
+    .he-card:hover {
+        font-size: 2.5rem;
+        height: 6rem;
+        width: 8rem;
+    }
+
+    /* Styles specific to English words */
+    .en-card {
+        font-size: 2.2rem;
+        font-weight: 600;
+    }
+}
+
+@media only screen and (max-width: 465px) {
+    /* Common styles for both cards */
+    .card {
+        height: 3rem;
+        width: 5rem;
+        font-size: 1rem;
+        text-align: center;
+        line-height: 3rem;
+    }
+
+    /* Styles specific to Hebrew words */
+    .he-card:hover {
+        font-size: 1.5rem;
+        height: 4rem;
+        width: 6rem;
+    }
+
+    /* Styles specific to English words */
+    .en-card {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+}
