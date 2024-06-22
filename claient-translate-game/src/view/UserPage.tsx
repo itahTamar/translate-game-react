@@ -69,7 +69,7 @@ const UserPage = () => {
             </button>
           </div>
 
-          <div className="relative t-8">
+          <div className="relative t-8 mt-12">
             <button
               className="m-3"
               onClick={() => {

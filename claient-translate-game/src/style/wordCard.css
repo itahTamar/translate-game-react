@@ -1,0 +1,27 @@
+/* Common styles for both cards */
+.card {
+    height: 9rem;
+    width: 11rem;
+    border: 0.1rem solid sandybrown;
+    border-radius: 1rem;
+    font-size: 2rem;
+    text-align: center;
+    background-color: rgb(230, 200, 156);
+    vertical-align: middle;
+    line-height: 9rem;
+    box-shadow: 0.5rem 0.5rem 1rem yellow;
+    padding: 0;
+}
+
+/* Styles specific to Hebrew words */
+.he-card:hover {
+    font-size: 3rem;
+    height: 10rem;
+    width: 12rem;
+}
+
+/* Styles specific to English words */
+.en-card {
+    font-size: 2.2rem;
+    font-weight: 600;
+}

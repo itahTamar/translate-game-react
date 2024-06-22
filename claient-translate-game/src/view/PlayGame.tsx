@@ -7,6 +7,7 @@ import { UserContext } from "../context/userContext";
 import { Word } from "../types/words";
 import { getXRandomUserWordByUserId } from "../api/wordApi";
 import { useNavigate } from 'react-router-dom';
+import "../style/game.css"
 
 const PlayGame = () => {
   const [score, setScore] = useState(0); //when the user chose the correct word the score increase with 1 point
@@ -90,31 +91,30 @@ const PlayGame = () => {
 
   return (
     <>
-      <div className="game h-screen">
-      <h1 className="username relative top-16">Hello {user}</h1>
-      <div className="wrapper relative mt-24">
-          <h4 className="instruction">Match the word to its meaning</h4>
-          <p className="pt-4">your score: {score}</p>
+      <div className="game h-screen w-screen">
+      <button className="back" onClick={handleFinish}>Finish</button>
+      <h1 className="username relative top-2 text-white">Hello {user}</h1>
+      <div className="wrapper relative mt-12">
+          <h4 className="instruction text-white">Match the word to its meaning</h4>
+          <p className="pt-4 text-white">your score: {score}</p>
+          {showMessage && <div className={`massage ${message === "Correct answer!" ? 'correct' : 'wrong'}`}>{message}</div> }
           <div className="second-wrapper mt-20">
-            {showMessage && <div className="massage pb-2">{message}</div>}
-            <div className="cards" id="cards">
-              <span className="text-3xl"><WordCard word={wordList[random]} label="EN" /></span>
-              <div className="cards_he mt-3">
-                <button className="m-4 text-xl" onClick={() => checkMatch(0)}>
+            <div>
+              <span className="text-3xl inline-block">
+                <WordCard word={wordList[random]} label="EN" />
+              </span>
+              <div className="mt-3">
+                <button className="m-8 p-0 border-0 rounded-2xl" onClick={() => checkMatch(0)}>
                   <WordCard word={wordList[0]} label="HE" />
                 </button>
-                <button className="m-4 text-xl" onClick={() => checkMatch(1)}>
+                <button className="m-8 p-0 border-0 rounded-2xl" onClick={() => checkMatch(1)}>
                   <WordCard word={wordList[1]} label="HE" />
                 </button>
-                <button className="m-4 text-xl" onClick={() => checkMatch(2)}>
+                <button className="m-8 p-0 border-0 rounded-2xl" onClick={() => checkMatch(2)}>
                   <WordCard word={wordList[2]} label="HE" />
                 </button>
               </div>
             </div>
-            <br></br>
-            <button className="finishBtn" onClick={handleFinish}>
-              Finish
-            </button>
           </div>
         </div>
       </div>

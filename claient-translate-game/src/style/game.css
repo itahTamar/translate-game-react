@@ -1,3 +1,22 @@
-/* .cards {
-    padding: 1rem;
-} */
+.game {
+    position: relative;
+    padding-top: 5rem;
+    background-image: url("images/words3.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.massage {
+    height: 25px;
+    padding-top: 2rem;
+}
+
+.correct {
+    color: aqua;
+    font-size:x-large;
+}
+
+.wrong {
+    color: red;
+    font-size: medium;
+}
