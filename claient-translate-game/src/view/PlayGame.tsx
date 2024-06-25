@@ -8,12 +8,14 @@ import { Word } from "../types/words";
 import { getXRandomUserWordByUserId } from "../api/wordApi";
 import { useNavigate } from 'react-router-dom';
 import "../style/game.css"
-
+import { Toast } from 'primereact/toast';
+        
 const PlayGame = () => {
   const [score, setScore] = useState(0); //when the user chose the correct word the score increase with 1 point
   const [wordList, setWordList] = useState<Word[]>([]);
   const [message, setMessage] = useState("");
   const [showMessage, setShowMessage] = useState(false);
+  const [loading, setLoading] = useState(false)
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -36,6 +38,7 @@ const PlayGame = () => {
   }
   
   const LoadWords = async () => {
+    setLoading(true)
     try {
       const response = await getXRandomUserWordByUserId(); //get array of X words
       console.log("at PlayGame/LoadWord the response:", response);
@@ -43,7 +46,7 @@ const PlayGame = () => {
       setWordList(response);
     } catch (error) {
       console.error("Error Load words:", error);
-    }
+    } 
   };
 
   let random: number = Math.floor(Math.random() * 3);
@@ -80,10 +83,19 @@ const PlayGame = () => {
     if (showMessage) {
       const timer = setTimeout(() => {
         setShowMessage(false);
-      }, 1000);
+      }, 1500);
       return () => clearTimeout(timer); // Clean up the timer on component unmount
     }
   }, [showMessage]);
+
+  useEffect(() => {
+    if (loading) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 3000);
+      return () => clearTimeout(timer); // Clean up the timer on component unmount
+    }
+  }, [loading])
 
   const displayMessage = () => {
     setShowMessage(true);
@@ -97,7 +109,12 @@ const PlayGame = () => {
       <div className="wrapper relative mt-12">
           <h4 className="instruction text-white">Match the word to its meaning</h4>
           <p className="pt-4 text-white">your score: {score}</p>
+          <div className="absolute inset-x-1/4">
           {showMessage && <div className={`massage ${message === "Correct answer!" ? 'correct' : 'wrong'}`}>{message}</div> }
+          </div>
+          {loading ? (
+            <div className="text-white">Good Job, carry on..</div> 
+          ) : (
           <div className="second-wrapper mt-20">
             <div>
               <span className="text-3xl inline-block">
@@ -116,6 +133,7 @@ const PlayGame = () => {
               </div>
             </div>
           </div>
+          )}
         </div>
       </div>
     </>
