@@ -8,7 +8,6 @@ import { Word } from "../types/words";
 import { getXRandomUserWordByUserId } from "../api/wordApi";
 import { useNavigate } from 'react-router-dom';
 import "../style/game.css"
-import { Toast } from 'primereact/toast';
         
 const PlayGame = () => {
   const [score, setScore] = useState(0); //when the user chose the correct word the score increase with 1 point
@@ -16,12 +15,12 @@ const PlayGame = () => {
   const [message, setMessage] = useState("");
   const [showMessage, setShowMessage] = useState(false);
   const [loading, setLoading] = useState(false)
+  const [random, setRandom] = useState(Math.floor(Math.random() * 3))
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleFinish = () => {
     navigate('/userPage')
-    //at end of the game the score will saved to user DB-scores
   };
 
   function shuffle(array: Word[]) {
@@ -49,12 +48,13 @@ const PlayGame = () => {
     } 
   };
 
-  let random: number = Math.floor(Math.random() * 3);
-  console.log("at PlayGame/checkMatch the random:", random);
+  // let random: number = Math.floor(Math.random() * 3);
+  // console.log("at PlayGame/checkMatch the random:", random);
 
   const checkMatch = (numberOfWord: number) => {
     console.log("at PlayGame/checkMatch the random:", random);
     console.log("at PlayGame/checkMatch the wordList:", wordList);
+    console.log("at PlayGame/checkMatch the wordList[random]:", wordList[random]);
 
     if (wordList[random]._id === wordList[numberOfWord]._id) {
       setMessage("Correct answer!");
@@ -69,7 +69,7 @@ const PlayGame = () => {
       console.log("at PlayGame/checkMatch the shuffledArray:", shuffledArray);
       setWordList(shuffledArray) 
     }
-
+    setRandom(Math.floor(Math.random() * 3))
     if (wordList.length < 3) {
       LoadWords();
     }
@@ -113,7 +113,7 @@ const PlayGame = () => {
           {showMessage && <div className={`massage ${message === "Correct answer!" ? 'correct' : 'wrong'}`}>{message}</div> }
           </div>
           {loading ? (
-            <div className="text-white">Good Job, carry on..</div> 
+            <div className="text-amber-500 text-3xl">Good Job, carry on..</div> 
           ) : (
           <div className="second-wrapper mt-20">
             <div>
