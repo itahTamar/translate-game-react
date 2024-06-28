@@ -13,7 +13,8 @@ html {
   
   tbody {
     border-bottom: 1px solid lightgray;
-    background-color: cadetblue;
+    background-color: lightgray;
+    /* background-color: cadetblue; */
   }
   
   th {

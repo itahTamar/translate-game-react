@@ -16,6 +16,7 @@ import { getAllUserWord, updateWordFieldByWordId } from "../api/wordApi";
 import "../style/table.css";
 import { Word } from "../types/words";
 import AddWord from "./words/AddWord";
+import trashcan from "../style/images/trashcan.png"
 
 // The declare module '@tanstack/react-table' statement is used to declare a module augmentation
 // for the @tanstack/react-table module.
@@ -255,8 +256,8 @@ export function TableTest() {
                             handleDelete((row.original as any)._id);
                           }
                         }}
-                      >
-                        🗑️
+                      ><img src={trashcan}/>
+                        {/* 🗑️ */}
                       </button>
                     </td>
                   </tr>

@@ -148,19 +148,21 @@ const PlayGame = () => {
                 </span>
                 <div className="mt-3">
                   <button
-                    className="m-8 p-0 border-0 rounded-2xl"
+                    className="m-8 p-0 border-0 rounded-2xl card1 absolute"
                     onClick={() => checkMatch(0)}
                   >
                     <WordCard word={wordList[0]} label="HE" />
                   </button>
+
                   <button
-                    className="m-8 p-0 border-0 rounded-2xl"
+                    className="m-8 p-0 border-0 rounded-2xl card2 absolute"
                     onClick={() => checkMatch(1)}
                   >
                     <WordCard word={wordList[1]} label="HE" />
                   </button>
+
                   <button
-                    className="m-8 p-0 border-0 rounded-2xl"
+                    className="m-8 p-0 border-0 rounded-2xl card3 absolute"
                     onClick={() => checkMatch(2)}
                   >
                     <WordCard word={wordList[2]} label="HE" />

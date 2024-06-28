@@ -41,8 +41,8 @@
 }
 
 .btn-garbageCan-img{
-    /* background-color: transparent; */
-    background-color: white;
+    background-color: transparent;
+    /* background-color: white; */
     font-size: larger;
     height: 2rem;
     width: 2rem;
