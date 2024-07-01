@@ -28,14 +28,6 @@
     flex-direction: column;
 }
 
-/* .grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    align-items: center;
-    justify-content: center;
-} */
-
   .card1 {
     left: 50rem
   }
