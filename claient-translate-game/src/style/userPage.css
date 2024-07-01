@@ -2,14 +2,14 @@
     position: relative;
     height: 100vh;
     width: 100vw;
-    padding-top: 5rem;
+    padding-top: 15rem;
     /* background-color: moccasin; */
-    background-image: url("images/words2.jpg");
+    background-image: url("images/learn.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-}
+    }
 
 .inner-container {
     position: relative;
-    top: 11rem;
+    top: 5rem;
 }

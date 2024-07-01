@@ -52,7 +52,7 @@ const UserPage = () => {
   return (
     <>
       <div className="userPage-container">
-        <h1 className="p-4 font-bold text-orange-300 text-7xl drop-shadow-2xl">Welcome {user}</h1>
+        <h1 className="p-4 font-bold text-7xl drop-shadow-2xl">Welcome {user}</h1>
         <button className="logout" onClick={handleLogout}>
             LogOut
           </button>

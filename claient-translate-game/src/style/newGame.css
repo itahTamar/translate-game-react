@@ -39,7 +39,7 @@
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center;    /* Center vertically */
-    margin-top: 6rem;
+    margin-top: 3rem;
 }
 
 .gridContainer {
@@ -52,7 +52,7 @@
     position: relative; /* Ensure absolute items are positioned relative to this container */
     gap: 13rem;
     width: 80vh;
-    height: 30vw;
+    height: 20vw;
     right: 6rem;
 }
 

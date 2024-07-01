@@ -12,7 +12,7 @@ const LandingPage = () => {
   return (
     // <div className="open-page">
       <div className="landingPage-container">
-        <h1 className="text-7xl mb-20 font-bold">Vocabulary Game</h1>
+        <h1 className="text-7xl mb-20 font-bold mt-16">Vocabulary Game</h1>
         <h2 className="text-3xl mb-5">Practice your vocabulary</h2>
 
         <div className="p-12">
