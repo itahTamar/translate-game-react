@@ -79,11 +79,11 @@ export function TableTest() {
   const columns = React.useMemo<ColumnDef<Word>[]>(
     () => [
       {
-        header: "English Word",
+        header: "",//"English WordS",
         accessorKey: "en_word",
       },
       {
-        header: "Hebrew Word",
+        header: "",//"Hebrew Word",
         accessorKey: "he_word",
       },
     ],
@@ -196,7 +196,7 @@ export function TableTest() {
           Back
         </button>
 
-        <h1 className="pb-3">Your Vocabulary</h1>
+        <h1 className="pb-3">Vocabulary Manager</h1>
 
         <div className="p-2 inline-block">
           <table>
