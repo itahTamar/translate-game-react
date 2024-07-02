@@ -52,13 +52,13 @@ const UserPage = () => {
   return (
     <>
       <div className="userPage-container">
-        <h1 className="p-4 font-bold text-7xl drop-shadow-2xl">Welcome {user}</h1>
+        <h1 className="p-4 font-bold text-7xl drop-shadow-2xl">Welcome</h1>
+        <h1 className="p-4 font-bold text-7xl drop-shadow-2xl">{user}</h1>
         <button className="logout" onClick={handleLogout}>
             LogOut
           </button>
         <div className="inner-container">
           <div>
-            {/* <p className="p-3">Your Highest Score: {highScore}</p> */}
             <button
               className="play text-2xl rounded-3xl"
               onClick={() => {

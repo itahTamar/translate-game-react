@@ -77,12 +77,11 @@ const Register = () => {
           Back
         </button>
 
-        <form className="relative top-64" onSubmit={handleSubmitRegister}>
+        <form className="custom-form relative" onSubmit={handleSubmitRegister}>
           <div className="">
             <div className="icon_container"></div>
             <input
               className="border border-black m-2 rounded-2xl w-72 h-12 relative indent-4"
-              // className="border border-black m-2 text-xl w-72"
               type="userName"
               name="userName"
               autoComplete="given-name"
@@ -96,7 +95,6 @@ const Register = () => {
 
           <div className="relative left-4">
             <input
-              // className="border border-black m-2 text-xl mx-0 w-72"
               className="border border-black m-2 rounded-2xl w-72 h-12 relative indent-4"
               type={visible ? "text" : "password"}
               id="password"
@@ -112,17 +110,14 @@ const Register = () => {
               type="button"
               className="emoji-button visible right-12"
               onClick={() => toggleVisibility("password")}
-              // onClick={() => setVisible(!visible)}
             >
               <span className="emoji">&#128065;</span>
               {visible ? <span className="slash">/</span> : null}
             </button>
-            {/* <p>chose password as you wish</p> */}
           </div>
 
           <div className="relative left-4">
             <input
-              // className="border border-black m-2 text-xl mx-0 w-72"
               className="border border-black m-2 rounded-2xl w-72 h-12 relative indent-4"
               type={visibleConfirm ? "text" : "password"}
               id="confirmPassword"
@@ -138,7 +133,6 @@ const Register = () => {
               type="button"
               className="emoji-button visible right-12"
               onClick={() => toggleVisibility("confirmPassword")}
-              // onClick={() => setVisibleConfirm(!visibleConfirm)}
             >
               <span className="emoji">&#128065;</span>
               {visibleConfirm ? <span className="slash">/</span> : null}

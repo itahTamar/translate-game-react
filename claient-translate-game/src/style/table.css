@@ -1,50 +1,56 @@
 html {
-    font-family: sans-serif;
-    font-size: 14px;
-  }
-  
-  table {
-    border: 1px solid lightgray;
-  }
+  font-family: sans-serif;
+  font-size: 14px;
+}
 
-  thead {
-    background-color: rgba(255, 255, 255, 1.0);
-  }
-  
-  tbody {
-    border-bottom: 1px solid lightgray;
-    background-color: lightgray;
-    /* background-color: cadetblue; */
-  }
-  
-  th {
-    border-bottom: 1px solid lightgray;
-    border-right: 1px solid lightgray;
-    padding: 2px 4px;
-  }
-  
-  tfoot {
-    color: gray;
-  }
-  
-  tfoot th {
-    font-weight: normal;
-  }
+table {
+  border: 1px solid lightgray;
+}
 
-  .table-container {
-    position: relative;
-    width: 100vw;
-    padding-top: 5rem;
-    /* background-image: url(images/words4.jpg);
-    background-size: cover;
-    background-repeat: no-repeat; */
-    /* background-color: rgb(0, 149, 255); */
-  }
+thead {
+  background-color: rgba(255, 255, 255, 1.0);
+}
 
-  .indented-input input {
-    text-indent: 5rem;
-  }
+tbody {
+  border-bottom: 1px solid lightgray;
+  background-color: lightgray;
+}
+
+th {
+  border-bottom: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  padding: 2px 4px;
+}
+
+tfoot {
+  color: gray;
+}
+
+tfoot th {
+  font-weight: normal;
+}
+
+.table-container {
+  position: relative;
+  width: 100vw;
+  padding-top: 5rem;
+}
+
+.indented-input input {
+  text-indent: 5rem;
+}
+
+td {
+  padding: 0.7rem;
+}
+
+.top-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.top-container h1 {
+  top: 3rem;
   
-  td {
-    padding: 0.7rem;
-  }
+}

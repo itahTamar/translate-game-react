@@ -16,7 +16,7 @@ import { getAllUserWord, updateWordFieldByWordId } from "../api/wordApi";
 import "../style/table.css";
 import { Word } from "../types/words";
 import AddWord from "./words/AddWord";
-import trashcan from "../style/images/trashcan.png"
+import trashcan from "../style/images/trashcan.png";
 
 // The declare module '@tanstack/react-table' statement is used to declare a module augmentation
 // for the @tanstack/react-table module.
@@ -70,20 +70,19 @@ function useSkipper() {
 }
 
 export function TableTest() {
-  // const rerender = React.useReducer(() => ({}), {})[1];
-  //being assigned with the dispatch fun' returned by useReduser, used to update and trigger a re-render
-
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<Word[]>([]);
 
   //build up the table columns header
   const columns = React.useMemo<ColumnDef<Word>[]>(
     () => [
       {
-        header: "",//"English WordS",
+        header: "", //"English WordS",
         accessorKey: "en_word",
       },
       {
-        header: "",//"Hebrew Word",
+        header: "", //"Hebrew Word",
         accessorKey: "he_word",
       },
     ],
@@ -91,7 +90,6 @@ export function TableTest() {
     []
   );
 
-  const [data, setData] = useState<Word[]>([]);
   const refreshData = () => handleGetAllUserWords();
 
   //the use of the useSkipper hook
@@ -99,6 +97,7 @@ export function TableTest() {
 
   //get data and store it in "data" state
   const handleGetAllUserWords = async () => {
+    setLoading(true);
     try {
       const response = await getAllUserWord();
       console.log("at settings/handleGetAllUserWords the response:", response);
@@ -109,6 +108,10 @@ export function TableTest() {
       setData(response);
     } catch (error) {
       console.error(error);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1600);
     }
   }; //work ok
 
@@ -188,7 +191,7 @@ export function TableTest() {
 
   return (
     <>
-      <div className="table-container">
+      <div className="top-container">
         <button
           className="absolute top-8 left-16"
           onClick={() => navigate("/userPage")}
@@ -196,148 +199,156 @@ export function TableTest() {
           Back
         </button>
 
-        <h1 className="pb-3">Vocabulary Manager</h1>
+        <h1 className="pb-3 fixed">Vocabulary Manager</h1>
+        <AddWord refreshData={refreshData} />
 
-        <div className="p-2 inline-block">
-          <table>
-            <thead>
-              {/* set the table header */}
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id} className="text-xl">
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <th key={header.id} colSpan={header.colSpan}>
-                        {header.isPlaceholder ? null : (
-                          <div>
-                            {flexRender(
-                              header.column.columnDef.header, //This is the header definition for the column
-                              header.getContext() //This returns the rendering context (or props) for the column-based component
-                            )}
-                            {/*the search inside the header*/}
-                            {header.column.getCanFilter() ? (
-                              <div>
-                                <Filter column={header.column} table={table} />
-                              </div>
-                            ) : null}
-                          </div>
-                        )}
-                      </th>
-                    );
-                  })}
-                </tr>
-              ))}
-            </thead>
-
-            <tbody>
-              {/*set the body of the table */}
-              {/*set the row */}
-              {table.getRowModel().rows.map((row) => {
-                return (
-                  <tr key={row.id}>
-                    {/*set the cell in the row*/}
-                    {row.getVisibleCells().map((cell) => {
+      </div>
+      <div className="table-container">
+        {loading ? (
+          <div className="text-black text-3xl">Loading ...</div>
+        ) : (
+          <div className="p-2 inline-block">
+            <table>
+              <thead>
+                {/* set the table header */}
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <tr key={headerGroup.id} className="text-xl">
+                    {headerGroup.headers.map((header) => {
                       return (
-                        <td key={cell.id} className="text-xl indented-input">
-                          {/*The flexRender function is used to render the cell using the template of your choice. 
-                          It will handle all possible cell definition scenarios for the cell object (string, JSX, fun')*/}
-                          {flexRender(
-                            cell.column.columnDef.cell, //This is the cell definition for the column
-                            cell.getContext() //This returns the rendering context (or props) for the cell-based component
+                        <th key={header.id} colSpan={header.colSpan}>
+                          {header.isPlaceholder ? null : (
+                            <div>
+                              {flexRender(
+                                header.column.columnDef.header, //This is the header definition for the column
+                                header.getContext() //This returns the rendering context (or props) for the column-based component
+                              )}
+
+                              {/*the search inside the header*/}
+                              {header.column.getCanFilter() ? (
+                                <div>
+                                  <Filter
+                                    column={header.column}
+                                    table={table}
+                                  />
+                                </div>
+                              ) : null}
+                            </div>
                           )}
-                        </td>
+                        </th>
                       );
                     })}
-                    <td className="px-6 py-0.5">
-                      <button
-                        className="btn-garbageCan-img"
-                        onClick={() => {
-                          const result = confirm("Delete this word?");
-                          if (result) {
-                            handleDelete((row.original as any)._id);
-                          }
-                        }}
-                      ><img src={trashcan}/>
-                        {/* 🗑️ */}
-                      </button>
-                    </td>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                ))}
+              </thead>
 
-          <AddWord refreshData={refreshData} />
+              <tbody>
+                {/*set the body of the table */}
+                {/*set the row */}
+                {table.getRowModel().rows.map((row) => {
+                  return (
+                    <tr key={row.id}>
+                      {/*set the cell in the row*/}
+                      {row.getVisibleCells().map((cell) => {
+                        return (
+                          <td key={cell.id} className="text-xl indented-input">
+                            {/*The flexRender function is used to render the cell using the template of your choice. 
+                          It will handle all possible cell definition scenarios for the cell object (string, JSX, fun')*/}
+                            {flexRender(
+                              cell.column.columnDef.cell, //This is the cell definition for the column
+                              cell.getContext() //This returns the rendering context (or props) for the cell-based component
+                            )}
+                          </td>
+                        );
+                      })}
+                      <td className="px-6 py-0.5">
+                        <button
+                          className="btn-garbageCan-img"
+                          onClick={() => {
+                            const result = confirm("Delete this word?");
+                            if (result) {
+                              handleDelete((row.original as any)._id);
+                            }
+                          }}
+                        >
+                          <img src={trashcan} />
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
 
-          <div className="h-2" />
-          <div className="flex items-center gap-2">
-            <button
-              className="border rounded p-1"
-              onClick={() => table.setPageIndex(0)}
-              disabled={!table.getCanPreviousPage()}
-            >
-              {"<<"}
-            </button>
-            <button
-              className="border rounded p-1"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              {"<"}
-            </button>
-            <button
-              className="border rounded p-1"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              {">"}
-            </button>
-            <button
-              className="border rounded p-1"
-              onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-              disabled={!table.getCanNextPage()}
-            >
-              {">>"}
-            </button>
-            <span className="flex items-center gap-1">
-              <div>Page</div>
-              <strong>
-                {table.getState().pagination.pageIndex + 1} of{" "}
-                {table.getPageCount()}
-              </strong>
-            </span>
-            <span className="flex items-center gap-1">
-              | Go to page:
-              <input
-                type="number"
-                defaultValue={table.getState().pagination.pageIndex + 1}
+            {/* <AddWord refreshData={refreshData} /> */}
+
+            <div className="h-2" />
+            <div className="flex items-center gap-2">
+              <button
+                className="border rounded p-1"
+                onClick={() => table.setPageIndex(0)}
+                disabled={!table.getCanPreviousPage()}
+              >
+                {"<<"}
+              </button>
+              <button
+                className="border rounded p-1"
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+              >
+                {"<"}
+              </button>
+              <button
+                className="border rounded p-1"
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+              >
+                {">"}
+              </button>
+              <button
+                className="border rounded p-1"
+                onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                disabled={!table.getCanNextPage()}
+              >
+                {">>"}
+              </button>
+              <span className="flex items-center gap-1">
+                <div>Page</div>
+                <strong>
+                  {table.getState().pagination.pageIndex + 1} of{" "}
+                  {table.getPageCount()}
+                </strong>
+              </span>
+              <span className="flex items-center gap-1">
+                | Go to page:
+                <input
+                  type="number"
+                  defaultValue={table.getState().pagination.pageIndex + 1}
+                  onChange={(e) => {
+                    const page = e.target.value
+                      ? Number(e.target.value) - 1
+                      : 0;
+                    const maxPage = table.getPageCount() - 1;  
+                    table.setPageIndex(Math.min(page, maxPage));
+                  }}
+                  className="border p-1 rounded w-16"
+                />
+              </span>
+              <select
+                value={table.getState().pagination.pageSize}
                 onChange={(e) => {
-                  const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                  table.setPageIndex(page);
+                  table.setPageSize(Number(e.target.value));
                 }}
-                className="border p-1 rounded w-16"
-              />
-            </span>
-            <select
-              value={table.getState().pagination.pageSize}
-              onChange={(e) => {
-                table.setPageSize(Number(e.target.value));
-              }}
-            >
-              {[10, 20, 30, 40, 50].map((pageSize) => (
-                <option key={pageSize} value={pageSize}>
-                  Show {pageSize}
-                </option>
-              ))}
-            </select>
+              >
+                {[10, 20, 30, 40, 50].map((pageSize) => (
+                  <option key={pageSize} value={pageSize}>
+                    Show {pageSize}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>{table.getRowModel().rows.length} Rows</div>
           </div>
-          <div>{table.getRowModel().rows.length} Rows</div>
-          {/* <div>
-          <button onClick={() => rerender()}>Force Rerender</button>
-        </div>
-        <div>
-          <button onClick={() => refreshData()}>Refresh Data</button>
-        </div> */}
-        </div>
+        )}
       </div>
     </>
   );
