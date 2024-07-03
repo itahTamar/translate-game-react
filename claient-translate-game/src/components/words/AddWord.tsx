@@ -40,7 +40,7 @@ const AddWord: FC<AddWordProps> = ({ refreshData }) => {
             onInput={(ev) => setEnWord((ev.target as HTMLInputElement).value)}
           ></input>
           <input
-            className="relative w-56 indent-12"
+            className="relative w-60 addHe"
             type="text"
             placeholder="Hebrew Word"
             onInput={(ev) => setHeWord((ev.target as HTMLInputElement).value)}
