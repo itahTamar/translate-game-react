@@ -13,7 +13,7 @@ const NewPlayGame = () => {
   const [score, setScore] = useState(0); //when the user chose the correct word the score increase with 1 point
   const [wordList, setWordList] = useState<Word[]>([]);
   const [message, setMessage] = useState("");
-  const [showMessage, setShowMessage] = useState(true);
+  const [showMessage, setShowMessage] = useState(false);
   const [loading, setLoading] = useState(false);
   const [random, setRandom] = useState(Math.floor(Math.random() * 3));
   const [initialLoading, setInitialLoading] = useState(true);
@@ -90,7 +90,7 @@ const NewPlayGame = () => {
   useEffect(() => {
     if (showMessage) {
       const timer = setTimeout(() => {
-        setShowMessage(true);
+        setShowMessage(false);
       }, 1000);
       return () => clearTimeout(timer); // Clean up the timer on component unmount
     }
