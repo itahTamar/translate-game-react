@@ -1,6 +1,6 @@
-import { Word } from "../../types/words"
-import { FC, useState } from 'react';
-import "../../style/wordCard.css"
+import { FC } from 'react';
+import "../../style/wordCard.css";
+import { Word } from "../../types/words";
 
 // label - will give the indiction to show the he or the en word
 //To give different styles to the .card when it shows word.en_word or word.he_word, 
