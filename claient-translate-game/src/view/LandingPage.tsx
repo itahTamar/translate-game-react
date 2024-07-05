@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Popup from "./../components/popup";
-import Login from "./../components/login/Login";
 import "../style/buttons.css";
 import "../style/landinPage.css";
+import Login from "./../components/login/Login";
+import Popup from "./../components/popup";
 
 const LandingPage = () => {
   const navigate = useNavigate();

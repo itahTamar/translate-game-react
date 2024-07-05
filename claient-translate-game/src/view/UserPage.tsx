@@ -6,7 +6,7 @@
 // 6) make the render-word a lazy-load
 
 import Cookies from "js-cookie";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 // import { getUserHighScore } from "../api/userApi";
 import { UserContext } from "../context/userContext";

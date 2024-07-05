@@ -10,7 +10,7 @@ interface UpdateProps {
 }
 
 const UpdateWord: React.FC<UpdateProps> = ({ data, onSuccessfulUpdate }) => {
-  const [cell, setCell] = useState(data.cell);
+  const [cell] = useState(data.cell);
   const [updateValue, setUpdateValue] = useState(data.cell)
 
   const handleUpdate = async (ev: React.FormEvent<HTMLFormElement>) => {
