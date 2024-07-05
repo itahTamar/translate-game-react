@@ -50,6 +50,7 @@ const Register = () => {
       setVisible((prevVisible) => {
         if (!prevVisible) {
           const id = setTimeout(() => setVisible(false), 2000);
+          //@ts-ignore
           setTimeoutId(id);
         }
         return !prevVisible;
@@ -59,6 +60,7 @@ const Register = () => {
       setVisibleConfirm((prevVisibleConfirm) => {
         if (!prevVisibleConfirm) {
           const id = setTimeout(() => setVisibleConfirm(false), 2000);
+          //@ts-ignore
           setTimeoutId(id);
         }
         return !prevVisibleConfirm;
