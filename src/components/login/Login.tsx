@@ -40,6 +40,7 @@ const Login = () => {
       const newVisible = !prevVisible
       if (newVisible) {
         const id = setTimeout(() => setVisible(false), 2000);
+        //@ts-ignore
         setTimeoutId(id);
       }
       return newVisible;

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { WordObject } from './../types/words';
 
 //get all user word by userId
 //userId in cookie
