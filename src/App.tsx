@@ -3,6 +3,11 @@ import './App.css'
 import { router } from './router/router'
 import { useState } from 'react';
 import { UserContext } from './context/userContext';
+import { disableReactDevTools } from '@fvilers/disable-react-devtools'
+
+let environment = "DEV"
+environment === "DEV" ? process.env["SERVER_URL_DEV"] : process.env["SERVER_URL_PROD"]
+disableReactDevTools()
 
 function App() {
 

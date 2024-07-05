@@ -199,15 +199,29 @@ export function TableTest() {
           Back
         </button>
 
-        <h1 className="pb-3 fixed">Vocabulary Manager</h1>
-        <AddWord refreshData={refreshData} />
-
+        <h1 className="fixed">Vocabulary Manager</h1>
       </div>
+      {/*table*/}
       <div className="table-container">
         {loading ? (
           <div className="text-black text-3xl">Loading ...</div>
         ) : (
           <div className="p-2 inline-block">
+            <AddWord refreshData={refreshData} />
+
+            {/* Render Filters */}
+            <div className="filters-container">
+              {table.getHeaderGroups().map((headerGroup) =>
+                headerGroup.headers.map((header) =>
+                  header.column.getCanFilter() ? (
+                    <div key={header.id} className="filter-item">
+                      <Filter column={header.column} table={table} />
+                    </div>
+                  ) : null
+                )
+              )}
+            </div>
+
             <table>
               <thead>
                 {/* set the table header */}
@@ -222,16 +236,6 @@ export function TableTest() {
                                 header.column.columnDef.header, //This is the header definition for the column
                                 header.getContext() //This returns the rendering context (or props) for the column-based component
                               )}
-
-                              {/*the search inside the header*/}
-                              {header.column.getCanFilter() ? (
-                                <div>
-                                  <Filter
-                                    column={header.column}
-                                    table={table}
-                                  />
-                                </div>
-                              ) : null}
                             </div>
                           )}
                         </th>
@@ -327,7 +331,7 @@ export function TableTest() {
                     const page = e.target.value
                       ? Number(e.target.value) - 1
                       : 0;
-                    const maxPage = table.getPageCount() - 1;  
+                    const maxPage = table.getPageCount() - 1;
                     table.setPageIndex(Math.min(page, maxPage));
                   }}
                   className="border p-1 rounded w-16"

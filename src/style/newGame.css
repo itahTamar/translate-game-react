@@ -80,6 +80,13 @@
     grid-column: 3;
 }
 
+@media only screen and (max-width: 1450px) {
+    .massage {
+        height: 0px;
+        padding-top: 0rem;
+    }
+} 
+
 @media only screen and (max-width: 640px) {
     .gridContainer {
         gap: 10rem;

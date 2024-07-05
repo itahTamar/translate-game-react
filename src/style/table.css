@@ -4,21 +4,28 @@ html {
 }
 
 table {
-  border: 1px solid lightgray;
+    /* Use percentages to make table responsive */
+    width: 100%;
 }
 
-thead {
-  background-color: rgba(255, 255, 255, 1.0);
+thead tr{
+  border: 1px solid white;
 }
 
 tbody {
   border-bottom: 1px solid lightgray;
   background-color: lightgray;
+  max-width: 533px;
+  display: block;
+  /* max-height: 451px; Adjust as needed */
+  overflow-y: auto;
+  overflow-x: clip;
+
+  max-height: 64vh; /* Adjust as needed */ 
+  width: 100%;
 }
 
 th {
-  border-bottom: 1px solid lightgray;
-  border-right: 1px solid lightgray;
   padding: 2px 4px;
 }
 
@@ -34,6 +41,12 @@ tfoot th {
   position: relative;
   width: 100vw;
   padding-top: 5rem;
+
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  /* max-width: 100%; */
 }
 
 .indented-input input {
@@ -48,9 +61,116 @@ td {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100vw;
 }
 
 .top-container h1 {
+  position: fixed;
   top: 3rem;
+  margin-bottom: 2rem; 
+}
+
+.filters-container {
+  display: flex;
+  padding-right: 6rem;
+
+  /*flex-wrap: wrap;  Add wrapping for smaller screens */
+}
+
+.filter-item {
+  flex: 1; /* Adjust flex basis as per requirement */
+}
+
+.addHe {
+  text-indent: 4.5rem;
+}
+
+@media only screen and (max-width: 716px) {
+  .top-container h1 {
+    font-size: 2.5rem;
+    position: fixed;
+    top: 3rem;
+    margin-bottom: 2rem; 
+  }
+}
+
+@media only screen and (max-hight: 847px) {
+  html {
+    font-size: 12px; 
+  }
   
+  .table-container {
+    position: relative;
+    padding-top: 0;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    width: 100vw; /* Make full-width on small scree*/
+  }
+}
+
+@media only screen and (max-hight: 755px) {
+  html {
+    font-size: 10px; 
+  }
+  
+  .table-container {
+    position: relative;
+    padding-top: 0;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    width: 100vw; /* Make full-width on small scree*/
+  }
+}
+
+  @media only screen and (max-width: 580px), only screen and (max-hight: 715px) {
+  html {
+    font-size: 10px; 
+  }
+  
+  .top-container h1 {
+    font-size: 1.5rem;
+    position: fixed;
+    top: 5rem;
+    margin-bottom: 2rem; 
+  }
+
+  .table-container {
+    position: relative;
+    padding-top: 0;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    width: 100vw; /* Make full-width on small scree*/
+  }
+
+
+  tbody {
+    max-height: 56vh; /* Adjust as needed for small screens */
+  }
+
+  .filters-container {
+    padding-right: 1rem;
+    align-items: center;
+  }
+
+  .filter-item {
+    width: 100%; /* Full width for filter items */
+    margin-bottom: 1rem; /* Space between filters */
+  }
+}
+
+@media only screen and (max-width: 555px), only screen and (max-hight: 593px) {
+  .filters-container {
+    padding-right: 6rem;
+    align-items: center;
+  }
+
+  tbody {
+    max-height: 40vh; /* Adjust as needed for small screens */
+  }
 }
