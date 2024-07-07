@@ -6,7 +6,9 @@ import { UserContext } from './context/userContext';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools'
 
 let environment = "DEV"
-environment === "DEV" ? process.env["SERVER_URL_DEV"] : process.env["SERVER_URL_PROD"]
+const dev_server = import.meta.env.VITE_REACT_APP_DEV_SERVER
+const prod_server = import.meta.env.VITE_REACT_APP_SERVER_URL_PROD
+environment === "DEV" ? dev_server : prod_server
 disableReactDevTools()
 
 function App() {
