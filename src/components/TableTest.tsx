@@ -123,7 +123,7 @@ export function TableTest() {
     try {
       if (!rowOriginalId || !columnId || !value)
         throw new Error("At handleUpdate: fail catching data from cell");
-      const response = await updateWordFieldByWordId(
+        const response = await updateWordFieldByWordId(
         rowOriginalId,
         columnId,
         value
