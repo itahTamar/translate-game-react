@@ -6,7 +6,8 @@ import { UserContext } from './context/userContext';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools'
 
 let environment = "DEV"
-environment === "DEV" ? process.env["SERVER_URL_DEV"] : process.env["SERVER_URL_PROD"]
+//environment === "DEV" ? process.env["SERVER_URL_DEV"] : process.env["SERVER_URL_PROD"]   this isn't the way to use env in front-end
+const serverUrl = environment === "DEV" ? import.meta.env.VITE_SERVER_URL_DEV : import.meta.env.VITE_SERVER_URL_PROD; //this is the way
 disableReactDevTools()
 
 function App() {
