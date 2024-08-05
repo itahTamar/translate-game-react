@@ -4,10 +4,10 @@ import { router } from './router/router'
 import { useState } from 'react';
 import { UserContext } from './context/userContext';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools'
+import { ServerContext } from './context/serverUrlContext';
 
 let environment = "DEV"
-//environment === "DEV" ? process.env["SERVER_URL_DEV"] : process.env["SERVER_URL_PROD"]   this isn't the way to use env in front-end
-const serverUrl = environment === "DEV" ? import.meta.env.VITE_SERVER_URL_DEV : import.meta.env.VITE_SERVER_URL_PROD; //this is the way?
+const serverUrl = environment === "DEV" ? import.meta.env.VITE_SERVER_URL_DEV : import.meta.env.VITE_SERVER_URL_PROD; //this is the way
 disableReactDevTools()
 
 function App() {
@@ -16,7 +16,9 @@ function App() {
   console.log(`Server URL: ${serverUrl}`); // Use serverUrl as needed
   return (
     <UserContext.Provider value={{ user, setUser }}>
+      <ServerContext.Provider value={{serverUrl}}>
         <RouterProvider router={router} />
+      </ServerContext.Provider>
     </UserContext.Provider>
   )
 }
