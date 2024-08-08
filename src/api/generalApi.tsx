@@ -1,9 +1,9 @@
 import axios from "axios";
 import { deleteUserWordById } from "./wordApi";
-import { ServerContext } from '../context/serverUrlContext';
+import { ServerContext } from '../context/ServerUrlContext';
 import { useContext } from "react";
-
 const serverUrl = useContext(ServerContext)
+
 export const deleteDataById = async (data: any) => {
     try {
         const response = deleteUserWordById(data)

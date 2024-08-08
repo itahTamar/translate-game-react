@@ -1,12 +1,15 @@
 // logout
 import axios from "axios";
 import Cookies from 'js-cookie';
+import { ServerContext } from '../context/ServerUrlContext';
+import { useContext } from 'react';
+const serverUrl = useContext(ServerContext)
 
 //register
 export const register = async (userName: string, password: string) => {
     try {
         if (!password || !userName) throw new Error("please provide a valid username and password to register");
-        const response = await axios.post("/api/users/register", { userName, password})
+        const response = await axios.post(`${serverUrl}/api/users/register`, { userName, password})
         console.log("at user-api register response from server is:", response.data.ok)
         if (!response.data.ok){
             alert("This username is already exist, sign-in or choose a different username")
@@ -23,7 +26,7 @@ export const register = async (userName: string, password: string) => {
 export const login = async (userName: string, password: string) => {
     try {
         if ( !userName || !password) throw new Error("please provide a valid username and password to login");
-        const response = await axios.post("/api/users/login", {userName, password})
+        const response = await axios.post(`${serverUrl}/api/users/login`, {userName, password})
         console.log("at user-api login response from server is:", response)
         return response.data
 
@@ -55,7 +58,7 @@ export const logout = () => {
 //userId is in cookie
 export const getUserHighScore = async () => {
     try {
-        const result = await axios.get(`/api/users/getUserHighScore`)  // get from server: { ok: true, highScore: userDB.highScore }
+        const result = await axios.get(`${serverUrl}/api/users/getUserHighScore`)  // get from server: { ok: true, highScore: userDB.highScore }
         console.log("at userApi/getUserHighScore the result:", result)
         if (!result) throw new Error("at userApi/getUserHighScore there was no result from server");
         console.log("at userApi/getUserHighScore the result.data.highScore:", result.data.highScore)
