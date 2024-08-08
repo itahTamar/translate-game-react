@@ -4,7 +4,7 @@ import { router } from './router/router'
 import { useState } from 'react';
 import { UserContext } from './context/userContext';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools'
-import { ServerContext } from './context/serverUrlContext';
+import { ServerContext } from './context/ServerUrlContext';
 
 let environment = "DEV"
 const dev_server = import.meta.env.VITE_REACT_APP_DEV_SERVER
