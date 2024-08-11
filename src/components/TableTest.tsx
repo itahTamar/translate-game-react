@@ -143,7 +143,7 @@ export function TableTest() {
     if (rowOriginalId === undefined)
       throw new Error("At table/handleDelete, rowOriginalId is undefined");
     try {
-      const response = await deleteDataById(rowOriginalId);
+      const response = await deleteDataById(serverUrl, rowOriginalId);
       console.log("At handleDeleteWord the data is: ", response);
       const { ok } = response;
       if (!ok) throw new Error("problem delete the word");

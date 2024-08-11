@@ -1,9 +1,9 @@
 import axios from "axios";
 import { deleteUserWordById } from "./wordApi";
 
-export const deleteDataById = async (data: any) => {
+export const deleteDataById = async (serverUrl: string, data: any) => {
     try {
-        const response = deleteUserWordById(data)
+        const response = deleteUserWordById(serverUrl, data)
         console.log("At deleteDataById the response:", response)
 
         if (response) {
