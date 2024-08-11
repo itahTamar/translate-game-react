@@ -8,6 +8,7 @@ import { Word } from "../types/words";
 import { getXRandomUserWordByUserId } from "../api/wordApi";
 import { useNavigate } from "react-router-dom";
 import "../style/newGame.css";
+import { ServerContext } from '../context/ServerUrlContext';
 
 const NewPlayGame = () => {
   const [score, setScore] = useState(0); //when the user chose the correct word the score increase with 1 point
@@ -19,6 +20,7 @@ const NewPlayGame = () => {
   const [initialLoading, setInitialLoading] = useState(true);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
+  const serverUrl = useContext(ServerContext)
 
   const handleFinish = () => {
     navigate("/userPage");
@@ -43,7 +45,7 @@ const NewPlayGame = () => {
   const LoadWords = async () => {
     setLoading(true);
     try {
-      const response = await getXRandomUserWordByUserId(); //get array of X words
+      const response = await getXRandomUserWordByUserId(serverUrl); //get array of X words
       console.log("at PlayGame/LoadWord the response:", response);
       if (!response) throw new Error("no user words from server");
       setWordList(response);

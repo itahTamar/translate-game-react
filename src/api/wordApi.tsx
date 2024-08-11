@@ -1,11 +1,8 @@
 import axios from 'axios';
-import { ServerContext } from '../context/ServerUrlContext';
-import { useContext } from 'react';
-const serverUrl = useContext(ServerContext)
 
 //get all user word by userId
 //userId in cookie
-export const getAllUserWord = async () => {
+export const getAllUserWord = async (serverUrl: string) => {
     try {
         const response = await axios.get(`${serverUrl}/api/userWords/getAllUsersWords`);
         console.log("At getAllUserWordByUserId the response:", response)
@@ -24,7 +21,7 @@ export const getAllUserWord = async () => {
 //get-random-X-user-words  x=9 at server
 //get array of 9 words
 // userId in cookie
-export const getXRandomUserWordByUserId = async () => {
+export const getXRandomUserWordByUserId = async (serverUrl: string) => {
     try {
         const response = await axios.get(`${serverUrl}/api/userWords/getXRandomUserWords`);
         console.log("At getXRandomUserWordByUserId the response:", response)
@@ -45,7 +42,7 @@ export const getXRandomUserWordByUserId = async () => {
 
 //add word (userId in cookie)
 //fixed at server
-export const addWord = async (en_word: string, he_word: string) => {
+export const addWord = async (serverUrl: string, en_word: string, he_word: string) => {
     try {
         const response = await axios.post(`${serverUrl}/api/words/add-word`, {en_word, he_word});
         console.log("At addWord the results:", response)
@@ -63,7 +60,7 @@ export const addWord = async (en_word: string, he_word: string) => {
 //update word by wordID
 //build in server
     //old virion
-export const updateWordById = async (word_id:string ,en_word: string, he_word: string ) => {
+export const updateWordById = async (serverUrl: string, word_id:string ,en_word: string, he_word: string ) => {
     try {
         const response = await axios.patch(`${serverUrl}/api/words/updateWord/${word_id}`, {en_word, he_word});
         console.log("At updateWordById the response:", response)
@@ -81,7 +78,7 @@ export const updateWordById = async (word_id:string ,en_word: string, he_word: s
     }
 }; //work ok
 
-export const updateWordFieldByWordId = async (words_id:string ,field: string, updateData: string ) => {
+export const updateWordFieldByWordId = async (serverUrl: string, words_id:string ,field: string, updateData: string ) => {
     try {
         const results = await axios.patch(`${serverUrl}/api/words/updateWordFieldByWordId/${words_id}`, {field, updateData});
         console.log("At updateWordFieldByWordId the response:", results)
@@ -101,7 +98,7 @@ export const updateWordFieldByWordId = async (words_id:string ,field: string, up
 
 //delete-word by wordID
 //build in server
-export const deleteUserWordById = async (word_id: string) => {
+export const deleteUserWordById = async (serverUrl: string, word_id: string) => {
     try {
         const response = await axios.delete(`${serverUrl}/api/userWords/deleteUserWord/${word_id}`);
         console.log("At deleteWordById the response:", response)

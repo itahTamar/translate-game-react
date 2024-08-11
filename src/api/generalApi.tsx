@@ -1,8 +1,5 @@
 import axios from "axios";
 import { deleteUserWordById } from "./wordApi";
-import { ServerContext } from '../context/ServerUrlContext';
-import { useContext } from "react";
-const serverUrl = useContext(ServerContext)
 
 export const deleteDataById = async (data: any) => {
     try {
@@ -19,7 +16,7 @@ export const deleteDataById = async (data: any) => {
     }
 };
 
-export const updateDataById = async (data_id:string ,field: string, update:string | number) => {
+export const updateDataById = async (serverUrl: string, data_id:string ,field: string, update:string | number) => {
     try {
         const response = await axios.patch(`${serverUrl}/api/books/"${data_id}"`, {field, update});
         const { ok, results } = response.data;

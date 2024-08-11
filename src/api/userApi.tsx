@@ -1,12 +1,9 @@
 // logout
 import axios from "axios";
 import Cookies from 'js-cookie';
-import { ServerContext } from '../context/ServerUrlContext';
-import { useContext } from 'react';
-const serverUrl = useContext(ServerContext)
 
 //register
-export const register = async (userName: string, password: string) => {
+export const register = async (serverUrl: string, userName: string, password: string) => {
     try {
         if (!password || !userName) throw new Error("please provide a valid username and password to register");
         const response = await axios.post(`${serverUrl}/api/users/register`, { userName, password})
@@ -23,7 +20,7 @@ export const register = async (userName: string, password: string) => {
 } //work ok
 
 //logIn
-export const login = async (userName: string, password: string) => {
+export const login = async (serverUrl: string,userName: string, password: string) => {
     try {
         if ( !userName || !password) throw new Error("please provide a valid username and password to login");
         const response = await axios.post(`${serverUrl}/api/users/login`, {userName, password})
@@ -56,7 +53,7 @@ export const logout = () => {
 
 //get user high scores
 //userId is in cookie
-export const getUserHighScore = async () => {
+export const getUserHighScore = async (serverUrl: string) => {
     try {
         const result = await axios.get(`${serverUrl}/api/users/getUserHighScore`)  // get from server: { ok: true, highScore: userDB.highScore }
         console.log("at userApi/getUserHighScore the result:", result)

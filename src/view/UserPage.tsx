@@ -20,7 +20,7 @@ const UserPage = () => {
 
   // const handleGetUserHighScore = async () => {
   //   try {
-  //     const response: number = await getUserHighScore();
+  //     const response: number = await getUserHighScore(serverUrl);
   //     console.log("at userPage/handleGetUserHighScore the response:", response);
   //     console.log(
   //       "at userPage/handleGetUserHighScore the user in context:",

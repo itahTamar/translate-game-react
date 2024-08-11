@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { updateDataById } from "../../api/generalApi";
-
+import { ServerContext } from '../../context/ServerUrlContext';
+import { useContext } from "react";
 interface UpdateProps {
   data: {
     id: string;
@@ -12,13 +13,14 @@ interface UpdateProps {
 const UpdateWord: React.FC<UpdateProps> = ({ data, onSuccessfulUpdate }) => {
   const [cell] = useState(data.cell);
   const [updateValue, setUpdateValue] = useState(data.cell)
+  const serverUrl = useContext(ServerContext)
 
   const handleUpdate = async (ev: React.FormEvent<HTMLFormElement>) => {
     if(data === undefined) throw new Error("At UpdateData/handleUpdate the data in undefined");
     
     try {
       ev.preventDefault();
-      const response = await updateDataById(
+      const response = await updateDataById(serverUrl,
         data.id,
         data.cell,
         updateValue

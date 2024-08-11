@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../../api/userApi";
 import { UserContext } from "../../context/userContext";
 import "../../style/buttons.css";
+import { ServerContext } from "../../context/ServerUrlContext";
+
 //work ok
 const Login = () => {
   const [username, setUsername] = useState<string>("");
@@ -11,16 +13,17 @@ const Login = () => {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const [timeoutId, setTimeoutId] = useState<number | null>(null);
+  const { serverUrl } = useContext(ServerContext);
 
   const handleSubmitLogin = async (ev: React.FormEvent<HTMLFormElement>) => {
     try {
       ev.preventDefault();
       console.log(
-        "At handleSubmitLogin the email & password are:",
+        "At handleSubmitLogin the username & password are:",
         username,
         password
       );
-      const response = await login(username, password);
+      const response = await login(serverUrl, username, password);
       if (!response) {
         window.alert(
           "login failed! check your username or password or please register first"

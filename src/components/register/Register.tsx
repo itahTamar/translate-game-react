@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../api/userApi";
 import "../../style/buttons.css";
 import "../../style/register.css";
+import { ServerContext } from "../../context/ServerUrlContext";
 
 const Register = () => {
   const [userName, setUserName] = useState<string>("");
@@ -13,6 +14,7 @@ const Register = () => {
   const [visibleConfirm, setVisibleConfirm] = useState(false);
   const [match, setMatch] = useState(false);
   const [timeoutId, setTimeoutId] = useState<number | null>(null);
+  const { serverUrl } = useContext(ServerContext);
 
   const validate = () => {
     if (password == confirmPassword) {
@@ -32,7 +34,7 @@ const Register = () => {
       if (password === confirmPassword) {
         const data = { userName, password };
         if (!data) throw new Error("register failed - no email or password");
-        const response = await register(userName, password);
+        const response = await register(serverUrl, userName, password);
         if (!response) throw new Error("register failed from server");
         navigate("/");
       } else {
