@@ -1,5 +1,6 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import { addWord } from "./../../api/wordApi";
+import { ServerContext } from '../../context/ServerUrlContext';
 
 interface AddWordProps {
   refreshData: () => void;
@@ -9,12 +10,13 @@ interface AddWordProps {
 const AddWord: FC<AddWordProps> = ({ refreshData }) => {
   const [enWord, setEnWord] = useState("");
   const [heWord, setHeWord] = useState("");
+  const serverUrl = useContext(ServerContext)
 
   const handleAddWord = async (ev: React.FormEvent<HTMLFormElement>) => {
     try {
       ev.preventDefault();
       console.log("At handleAddWord the enWord & heWord are:", enWord, heWord);
-      const response = await addWord(enWord, heWord);
+      const response = await addWord(serverUrl, enWord, heWord);
       if (!response) {
         window.alert("Add word failed!");
         throw new Error("No response from axios at handleAddWord");

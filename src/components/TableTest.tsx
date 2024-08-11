@@ -9,7 +9,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteDataById } from "../api/generalApi";
 import { getAllUserWord, updateWordFieldByWordId } from "../api/wordApi";
@@ -17,6 +17,7 @@ import "../style/table.css";
 import { Word } from "../types/words";
 import AddWord from "./words/AddWord";
 import trashcan from "../style/images/trashcan.png";
+import { ServerContext } from '../context/ServerUrlContext';
 
 // The declare module '@tanstack/react-table' statement is used to declare a module augmentation
 // for the @tanstack/react-table module.
@@ -73,6 +74,7 @@ export function TableTest() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<Word[]>([]);
+  const serverUrl = useContext(ServerContext)
 
   //build up the table columns header
   const columns = React.useMemo<ColumnDef<Word>[]>(
@@ -99,7 +101,7 @@ export function TableTest() {
   const handleGetAllUserWords = async () => {
     setLoading(true);
     try {
-      const response = await getAllUserWord();
+      const response = await getAllUserWord(serverUrl);
       console.log("at settings/handleGetAllUserWords the response:", response);
       if (!response)
         throw new Error(
@@ -124,6 +126,7 @@ export function TableTest() {
       if (!rowOriginalId || !columnId || !value)
         throw new Error("At handleUpdate: fail catching data from cell");
         const response = await updateWordFieldByWordId(
+        serverUrl,
         rowOriginalId,
         columnId,
         value

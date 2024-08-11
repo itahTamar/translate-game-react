@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Word } from "../../types/words";
 import { updateWordById } from "../../api/wordApi";
+import { ServerContext } from '../../context/ServerUrlContext';
 
 interface UpdateWordProps {
   word: Word;
@@ -13,11 +14,12 @@ const UpdateWord: React.FC<UpdateWordProps> = ({
 }) => {
   const [enWord, setEnWord] = useState(word.en_word);
   const [heWord, setHeWord] = useState(word.he_word);
+  const serverUrl = useContext(ServerContext)
 
   const handleUpdateWord = async (ev: React.FormEvent<HTMLFormElement>) => {
     try {
       ev.preventDefault();
-      const response = await updateWordById(word._id, enWord, heWord);
+      const response = await updateWordById(serverUrl, word._id, enWord, heWord);
       if (!response)
         throw new Error("No response from axios at handleUpdateWord");
       window.alert("The update was successful");
