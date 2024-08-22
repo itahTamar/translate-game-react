@@ -6,7 +6,7 @@ import { UserContext } from './context/userContext';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools'
 import { ServerContext } from './context/ServerUrlContext';
 
-let environment = "DEV"
+let environment = import.meta.env.MODE;
 const dev_server = import.meta.env.VITE_REACT_APP_SERVER_URL_DEV
 const prod_server = import.meta.env.VITE_REACT_APP_SERVER_URL_PROD
 const checkEnvironment = environment === "DEV" ? dev_server : prod_server
