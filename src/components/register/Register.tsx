@@ -14,7 +14,7 @@ const Register = () => {
   const [visibleConfirm, setVisibleConfirm] = useState(false);
   const [match, setMatch] = useState(false);
   const [timeoutId, setTimeoutId] = useState<number | null>(null);
-  const { serverUrl } = useContext(ServerContext);
+  const serverUrl = useContext(ServerContext);
 
   const validate = () => {
     if (password == confirmPassword) {
