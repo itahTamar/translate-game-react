@@ -23,7 +23,7 @@ export const register = async (serverUrl: string, userName: string, password: st
 export const login = async (serverUrl: string,userName: string, password: string) => {
     try {
         if ( !userName || !password) throw new Error("please provide a valid username and password to login");
-        const response = await axios.post(`${serverUrl}/api/users/login`, {userName, password})
+        const response = await axios.post(`${serverUrl}/api/users/login`, {userName, password}, { withCredentials: true })
         console.log("at user-api login response from server is:", response)
         return response.data
 
@@ -55,7 +55,7 @@ export const logout = () => {
 //userId is in cookie
 export const getUserHighScore = async (serverUrl: string) => {
     try {
-        const result = await axios.get(`${serverUrl}/api/users/getUserHighScore`)  // get from server: { ok: true, highScore: userDB.highScore }
+        const result = await axios.get(`${serverUrl}/api/users/getUserHighScore`, { withCredentials: true })  // get from server: { ok: true, highScore: userDB.highScore }
         console.log("at userApi/getUserHighScore the result:", result)
         if (!result) throw new Error("at userApi/getUserHighScore there was no result from server");
         console.log("at userApi/getUserHighScore the result.data.highScore:", result.data.highScore)

@@ -18,7 +18,7 @@ export const deleteDataById = async (serverUrl: string, data: any) => {
 
 export const updateDataById = async (serverUrl: string, data_id:string ,field: string, update:string | number) => {
     try {
-        const response = await axios.patch(`${serverUrl}/api/books/"${data_id}"`, {field, update});
+        const response = await axios.patch(`${serverUrl}/api/books/"${data_id}"`, {field, update}, { withCredentials: true });
         const { ok, results } = response.data;
 
         if (ok) {

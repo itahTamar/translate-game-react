@@ -4,7 +4,7 @@ import axios from 'axios';
 //userId in cookie
 export const getAllUserWord = async (serverUrl: string) => {
     try {
-        const response = await axios.get(`${serverUrl}/api/userWords/getAllUsersWords`);
+        const response = await axios.get(`${serverUrl}/api/userWords/getAllUsersWords`, { withCredentials: true });
         console.log("At getAllUserWordByUserId the response:", response)
         const { ok, words } = response.data;
         console.log("At getAllUserWordByUserId the results:", words)
@@ -23,7 +23,7 @@ export const getAllUserWord = async (serverUrl: string) => {
 // userId in cookie
 export const getXRandomUserWordByUserId = async (serverUrl: string) => {
     try {
-        const response = await axios.get(`${serverUrl}/api/userWords/getXRandomUserWords`);
+        const response = await axios.get(`${serverUrl}/api/userWords/getXRandomUserWords`, { withCredentials: true });
         console.log("At getXRandomUserWordByUserId the response:", response)
         console.log("At getXRandomUserWordByUserId the response.data:", response.data)
 
@@ -44,7 +44,7 @@ export const getXRandomUserWordByUserId = async (serverUrl: string) => {
 //fixed at server
 export const addWord = async (serverUrl: string, en_word: string, he_word: string) => {
     try {
-        const response = await axios.post(`${serverUrl}/api/words/add-word`, {en_word, he_word});
+        const response = await axios.post(`${serverUrl}/api/words/add-word`, {en_word, he_word}, { withCredentials: true });
         console.log("At addWord the results:", response)
         const { ok, words, message } = response.data;
         if (ok) {
@@ -62,7 +62,7 @@ export const addWord = async (serverUrl: string, en_word: string, he_word: strin
     //old virion
 export const updateWordById = async (serverUrl: string, word_id:string ,en_word: string, he_word: string ) => {
     try {
-        const response = await axios.patch(`${serverUrl}/api/words/updateWord/${word_id}`, {en_word, he_word});
+        const response = await axios.patch(`${serverUrl}/api/words/updateWord/${word_id}`, {en_word, he_word}, { withCredentials: true });
         console.log("At updateWordById the response:", response)
         
         const { ok, results } = response.data;
@@ -80,7 +80,7 @@ export const updateWordById = async (serverUrl: string, word_id:string ,en_word:
 
 export const updateWordFieldByWordId = async (serverUrl: string, words_id:string ,field: string, updateData: string ) => {
     try {
-        const results = await axios.patch(`${serverUrl}/api/words/updateWordFieldByWordId/${words_id}`, {field, updateData});
+        const results = await axios.patch(`${serverUrl}/api/words/updateWordFieldByWordId/${words_id}`, {field, updateData}, { withCredentials: true });
         console.log("At updateWordFieldByWordId the response:", results)
         //response = {ok, response, massage, error?}
         const { ok, response, massage } = results.data;
@@ -100,7 +100,7 @@ export const updateWordFieldByWordId = async (serverUrl: string, words_id:string
 //build in server
 export const deleteUserWordById = async (serverUrl: string, word_id: string) => {
     try {
-        const response = await axios.delete(`${serverUrl}/api/userWords/deleteUserWord/${word_id}`);
+        const response = await axios.delete(`${serverUrl}/api/userWords/deleteUserWord/${word_id}`, { withCredentials: true });
         console.log("At deleteWordById the response:", response)
 
         if (response.data.ok) {
