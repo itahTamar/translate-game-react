@@ -13,12 +13,12 @@ const checkEnvironment = environment === "DEV" ? dev_server : prod_server
 disableReactDevTools()
 
 function App() {
-  const [serverUrl] = useState<any>(checkEnvironment)
+  const [serverUrl] = useState<string>(checkEnvironment)
   const [user, setUser] = useState<any>(null);
   console.log(`Server URL: ${serverUrl}`); // Use serverUrl as needed in the API path
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      <ServerContext.Provider value={{serverUrl}}>
+      <ServerContext.Provider value={serverUrl}>
         <RouterProvider router={router} />
       </ServerContext.Provider>
     </UserContext.Provider>

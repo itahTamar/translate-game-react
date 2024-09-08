@@ -13,7 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const [timeoutId, setTimeoutId] = useState<number | null>(null);
-  const { serverUrl } = useContext(ServerContext);
+  const serverUrl = useContext(ServerContext);
 
   const handleSubmitLogin = async (ev: React.FormEvent<HTMLFormElement>) => {
     try {
