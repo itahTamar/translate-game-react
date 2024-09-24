@@ -14,6 +14,7 @@ const Register = () => {
   const [visibleConfirm, setVisibleConfirm] = useState(false);
   const [match, setMatch] = useState(false);
   const [timeoutId, setTimeoutId] = useState<number | null>(null);
+  const [email, setEmail] = useState<string>("")
   const serverUrl = useContext(ServerContext);
 
   const validate = () => {
@@ -32,9 +33,9 @@ const Register = () => {
     try {
       ev.preventDefault();
       if (password === confirmPassword) {
-        const data = { userName, password };
+        const data = { userName, email, password };
         if (!data) throw new Error("register failed - no email or password");
-        const response = await register(serverUrl, userName, password);
+        const response = await register(serverUrl, userName, email, password);
         if (!response) throw new Error("register failed from server");
         navigate("/");
       } else {
@@ -96,6 +97,18 @@ const Register = () => {
               }
             />
           </div>
+
+          <input
+              className="border border-black m-2 rounded-2xl w-72 h-12 relative indent-4"
+              type="email"
+              name="email"
+              autoComplete="given-name"
+              placeholder="Enter your email" //must be uniq
+              value={email}
+              onInput={(ev) =>
+                setEmail((ev.target as HTMLInputElement).value)
+              }
+            />
 
           <div className="relative left-4">
             <input

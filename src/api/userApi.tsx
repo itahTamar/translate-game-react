@@ -3,10 +3,10 @@ import axios from "axios";
 import Cookies from 'js-cookie';
 
 //register
-export const register = async (serverUrl: string, userName: string, password: string) => {
+export const register = async (serverUrl: string, userName: string, email: string, password: string) => {
     try {
-        if (!password || !userName) throw new Error("please provide a valid username and password to register");
-        const response = await axios.post(`${serverUrl}/api/users/register`, { userName, password})
+        if (!password || !userName || !email) throw new Error("please provide a valid username and password to register");
+        const response = await axios.post(`${serverUrl}/api/users/register`, { userName, email, password})
         console.log("at user-api register response from server is:", response.data.ok)
         if (!response.data.ok){
             alert("This username is already exist, sign-in or choose a different username")
@@ -20,10 +20,10 @@ export const register = async (serverUrl: string, userName: string, password: st
 } //work ok
 
 //logIn
-export const login = async (serverUrl: string,userName: string, password: string) => {
+export const login = async (serverUrl: string, userName: string, email:string, password: string) => {
     try {
-        if ( !userName || !password) throw new Error("please provide a valid username and password to login");
-        const response = await axios.post(`${serverUrl}/api/users/login`, {userName, password}, { withCredentials: true })
+        if ( !userName || !password || !email) throw new Error("please provide a valid username and password to login");
+        const response = await axios.post(`${serverUrl}/api/users/login`, {userName, email, password}, { withCredentials: true })
         console.log("at user-api login response from server is:", response)
         return response.data
 
