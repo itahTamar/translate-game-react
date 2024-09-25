@@ -84,9 +84,13 @@ export const recoveryEmail = async ({serverUrl,email} : {serverUrl: string, emai
         console.log("at recoveryEmail response from recipient_email is:", recipient_email)
 
         const response = await axios.post(`${serverUrl}/send_recovery_email`, { recipient_email}, { withCredentials: true })
-        console.log("at recoveryEmail response from server is:", response.data)
+        
+        console.log("at recoveryEmail response from server is:", response)
+        console.log("at recoveryEmail response.data from server is:", response.data)
+        console.log("at recoveryEmail  response.data.ok from server is:", response.data.ok)
+        
         if (!response.data.ok){
-            alert("This username is already exist, sign-in or choose a different username")
+            alert("Recovery Email Failed")
             throw new Error(response.data);  
         }
         return response.data
