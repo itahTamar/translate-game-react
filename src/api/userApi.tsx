@@ -9,7 +9,7 @@ export const register = async (serverUrl: string, userName: string, email: strin
         const response = await axios.post(`${serverUrl}/api/users/register`, { userName, email, password})
         console.log("at user-api register response from server is:", response.data.ok)
         if (!response.data.ok){
-            alert("This username is already exist, sign-in or choose a different username")
+            alert("At Register: This username is already exist, sign-in or choose a different username")
             throw new Error(response.data);  
         }
         return response.data
@@ -81,7 +81,7 @@ export const recoveryEmail = async ({serverUrl,email} : {serverUrl: string, emai
     try {
         if (!email) throw new Error("please provide a valid email");
         const recipient_email = email 
-        console.log("at recoveryEmail response from recipient_email is:", recipient_email)
+        console.log("at recoveryEmail the recipient_email is:", recipient_email)
 
         const response = await axios.post(`${serverUrl}/send_recovery_email`, { recipient_email}, { withCredentials: true })
         
