@@ -28,7 +28,7 @@ const Login = () => {
       const response = await login(serverUrl, username, email, password);
       if (!response) {
         window.alert(
-          "login failed! check your username or password or please register first"
+          "login failed! check your username, email or password or please register first"
         );
         throw new Error("login failed, please register first");
       }
@@ -111,6 +111,18 @@ const Login = () => {
             </button>
           </div>
         </div>
+
+        <div>
+          <a
+            href="#"
+            onClick={() => navigate('/forgotPassword')}
+            className="text-gray-800"
+          >
+            {" "}
+            Forgot Password?
+          </a>
+        </div>
+        
         <button className="login text-xl" type="submit">
           Log in
         </button>
