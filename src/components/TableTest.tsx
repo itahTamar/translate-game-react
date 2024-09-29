@@ -107,7 +107,7 @@ export function TableTest() {
         throw new Error(
           "No response from axios getAllUserWord at handleGetAllUserWords"
         );
-      setData(response);
+      setData(response.reverse()); //reverse the data array so the the most recently added words appearing first
     } catch (error) {
       console.error(error);
     } finally {

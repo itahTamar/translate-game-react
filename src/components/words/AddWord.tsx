@@ -21,7 +21,7 @@ const AddWord: FC<AddWordProps> = ({ refreshData }) => {
         window.alert("Add word failed!");
         throw new Error("No response from axios at handleAddWord");
       }
-      window.alert("The word added successful");
+      // window.alert("The word added successful");
       // Reset the form fields by calling the form's reset method
       (ev.target as HTMLFormElement).reset();
       // Call the refreshData function passed as a prop
