@@ -15,9 +15,10 @@ disableReactDevTools()
 function App() {
   const [serverUrl] = useState<string>(checkEnvironment)
   const [user, setUser] = useState<any>(null);
+  const [email, setUserEmail] = useState<string>("")
   console.log(`Server URL: ${serverUrl}`); // Use serverUrl as needed in the API path
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{  user, setUser , email, setUserEmail }}>
       <ServerContext.Provider value={serverUrl}>
         <RouterProvider router={router} />
       </ServerContext.Provider>

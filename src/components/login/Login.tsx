@@ -11,6 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("")
   const { setUser } = useContext(UserContext);
+  const { setUserEmail } = useContext(UserContext);
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const [timeoutId, setTimeoutId] = useState<number | null>(null);
@@ -33,6 +34,7 @@ const Login = () => {
         throw new Error("login failed, please register first");
       }
       setUser(username);
+      setUserEmail(email);
       navigate(`/userPage`);
     } catch (error) {
       console.error(error);
@@ -55,7 +57,7 @@ const Login = () => {
   return (
     <div>
       <form className="relative top-24" onSubmit={handleSubmitLogin}>
-        <h1 className="text-4xl pb-5">Welcome Guest</h1>
+        <h1 className="text-4xl pb-5">Welcome</h1>
         <div className="m-6">
           <label className="text-2xl">Please enter your UserName</label>
           <div>

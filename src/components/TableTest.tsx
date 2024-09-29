@@ -203,6 +203,13 @@ export function TableTest() {
         </button>
 
         <h1 className="fixed">Vocabulary Manager</h1>
+
+        <button
+         className="absolute top-8 right-10"
+         onClick={() => navigate("/updateUserDetails")}
+         >
+          Update your Details
+        </button>
       </div>
       {/*table*/}
       <div className="table-container">
