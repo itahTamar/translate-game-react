@@ -103,7 +103,7 @@ export const recoveryEmail = async ({serverUrl,email} : {serverUrl: string, emai
 export const resetPassword = async ({serverUrl, email, password} : {serverUrl: string, email: string, password: string}) => {
         try {
             if (!password || !email) throw new Error("please provide a valid email and password to register");
-            const response = await axios.post(`${serverUrl}/api/users/resetPassword`, { email, password})
+            const response = await axios.post(`${serverUrl}/api/users/resetPassword`, { email, password}, { withCredentials: true })
             console.log("at user-api resetPassword response from server is:", response.data.ok)
             if (!response.data.ok){
                 alert("at resetPassword -> reset password failed")
