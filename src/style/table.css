@@ -45,8 +45,14 @@ tfoot th {
   align-items: center;
   display: flex;
   justify-content: center;
+}
 
-  /* max-width: 100%; */
+.form-container {
+  margin: 2rem;
+}
+
+.addWordFormInput {
+  border: 3px solid gray;
 }
 
 .indented-input input {
@@ -62,6 +68,7 @@ td {
   flex-direction: column;
   align-items: center;
   width: 100vw;
+  margin-bottom: 3rem;
 }
 
 .top-container h1 {
