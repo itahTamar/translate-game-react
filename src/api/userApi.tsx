@@ -59,18 +59,6 @@ export const login = async (
   }
 }; //work ok
 
-//get user name
-//!fix on server
-//!unnecessary
-// export const getUserName = async () => {
-//     try {
-//         const result = await axios.get(`/api/users/getUser`)
-//         return result
-//     } catch (error) {
-//         console.error(error)
-//     }
-// }
-
 //logOut
 export const logout = () => {
   Cookies.remove("user");

@@ -9,7 +9,7 @@ import { ServerContext } from './context/ServerUrlContext';
 let environment = import.meta.env.MODE;
 const dev_server = import.meta.env.VITE_REACT_APP_SERVER_URL_DEV
 const prod_server = import.meta.env.VITE_REACT_APP_SERVER_URL_PROD
-const checkEnvironment = environment === "DEV" ? dev_server : prod_server
+const checkEnvironment = environment === "development" ? dev_server : prod_server
 disableReactDevTools()
 
 function App() {

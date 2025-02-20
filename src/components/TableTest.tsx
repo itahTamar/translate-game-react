@@ -17,7 +17,7 @@ import "../style/table.css";
 import { Word } from "../types/words";
 import AddWord from "./words/AddWord";
 import trashcan from "../style/images/trashcan.png";
-import { ServerContext } from '../context/ServerUrlContext';
+import { ServerContext } from "../context/ServerUrlContext";
 
 // The declare module '@tanstack/react-table' statement is used to declare a module augmentation
 // for the @tanstack/react-table module.
@@ -74,7 +74,7 @@ export function TableTest() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<Word[]>([]);
-  const serverUrl = useContext(ServerContext)
+  const serverUrl = useContext(ServerContext);
 
   //build up the table columns header
   const columns = React.useMemo<ColumnDef<Word>[]>(
@@ -125,7 +125,7 @@ export function TableTest() {
     try {
       if (!rowOriginalId || !columnId || !value)
         throw new Error("At handleUpdate: fail catching data from cell");
-        const response = await updateWordFieldByWordId(
+      const response = await updateWordFieldByWordId(
         serverUrl,
         rowOriginalId,
         columnId,
@@ -192,6 +192,39 @@ export function TableTest() {
     debugTable: true,
   });
 
+  //export data to file
+  const handleExportUserWords = async () => {
+    try {
+      const response = await fetch(`${serverUrl}/api/userWords/export-user-words`, {
+        method: "GET",
+        credentials: "include", // Ensure cookies are sent
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to export words");
+      }
+
+      // Extract filename from the response headers
+      const disposition = response.headers.get("Content-Disposition");
+      const fileName = disposition
+        ? disposition.split("filename=")[1]
+        : "UserWords.csv";
+
+      // Convert response to blob and trigger download
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", fileName);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error exporting user words:", error);
+    }
+  };
+
   return (
     <>
       <div className="top-container">
@@ -205,10 +238,17 @@ export function TableTest() {
         <h1 className="fixed">Vocabulary Manager</h1>
 
         <button
-         className="absolute top-8 right-10"
-         onClick={() => navigate("/updateUserDetails")}
-         >
+          className="absolute top-8 right-10"
+          onClick={() => navigate("/updateUserDetails")}
+        >
           Update your Details
+        </button>
+
+        <button
+          className="absolute top-8 right-40 bg-blue-500 text-white px-4 py-2 rounded"
+          onClick={handleExportUserWords}
+        >
+          Extract to File
         </button>
       </div>
       {/*table*/}
