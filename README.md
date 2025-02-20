@@ -31,3 +31,8 @@ This how the game look:
 
 To play go to:
 https://tamarprojects.com/
+
+
+starting this repo on your local machine:
+1) clone it
+2) open terminal and install: npm i
