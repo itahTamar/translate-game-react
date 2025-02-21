@@ -9,7 +9,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteDataById } from "../api/generalApi";
 import { getAllUserWord, updateWordFieldByWordId } from "../api/wordApi";
@@ -75,7 +75,8 @@ export function TableTest() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<Word[]>([]);
   const serverUrl = useContext(ServerContext);
-
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  
   //build up the table columns header
   const columns = React.useMemo<ColumnDef<Word>[]>(
     () => [
@@ -195,10 +196,13 @@ export function TableTest() {
   //export data to file
   const handleExportUserWords = async () => {
     try {
-      const response = await fetch(`${serverUrl}/api/userWords/export-user-words`, {
-        method: "GET",
-        credentials: "include", // Ensure cookies are sent
-      });
+      const response = await fetch(
+        `${serverUrl}/api/userWords/export-user-words`,
+        {
+          method: "GET",
+          credentials: "include", // Ensure cookies are sent
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to export words");
@@ -225,33 +229,99 @@ export function TableTest() {
     }
   };
 
+  // Toggle the dropdown menu
+  const toggleDropdown = () => {
+    setDropdownOpen((prev) => !prev);
+  };
+
+  // Close the dropdown when clicking outside
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <>
-      <div className="top-container">
-        <button
-          className="absolute top-8 left-16"
-          onClick={() => navigate("/userPage")}
-        >
-          Back
-        </button>
+      <header className="z-50 relative flex justify-between items-center">
+       
+          <button
+            // className="absolute top-8 left-16"
+            className="back absolute top-4 left-4 text-white bg-red-500 px-4 py-2 rounded hover:bg-red-600 "
+            onClick={() => navigate("/userPage")}
+          >
+            Back
+          </button>
+     
 
-        <h1 className="fixed">Vocabulary Manager</h1>
+        <h1 className="tableName absolute top-4">Vocabulary Manager</h1>
 
-        <button
-          className="absolute top-8 right-10"
-          onClick={() => navigate("/updateUserDetails")}
-        >
-          Update your Details
-        </button>
+        {/* Dropdown Menu */}
+        <div className="dropDownMenuBtn text-left" ref={dropdownRef}>
+          <button
+            onClick={toggleDropdown}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 flex items-center"
+          >
+            Actions
+            <svg
+              className="ml-2 h-5 w-5"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 13.414l3.293-3.293a1 1 0 011.414
+                 1.414L10 13.414l-4.707-4.707a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
 
-        <button
-          className="absolute top-8 right-40 bg-blue-500 text-white px-4 py-2 rounded"
-          onClick={handleExportUserWords}
-        >
-          Extract to File
-        </button>
-      </div>
-      {/*table*/}
+          {/* Dropdown Content */}
+          {dropdownOpen && (
+            <div className="origin-top-right absolute z-50 right-0 mt-2 w-44 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+              <div
+                className="py-1"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="options-menu"
+              >
+                {/* Update user Details */}
+                <button
+                  className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left"
+                  onClick={() => navigate("/updateUserDetails")}
+                >
+                  Update your Details
+                </button>
+
+                {/* export to file */}
+                <button
+                  onClick={() => {
+                    handleExportUserWords();
+                    setDropdownOpen(false);
+                  }}
+                  className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left"
+                  role="menuitem"
+                >
+                  Export Table
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+
+      </header>
+
+      
       <div className="table-container">
         {loading ? (
           <div className="text-black text-3xl">Loading ...</div>
@@ -272,6 +342,7 @@ export function TableTest() {
               )}
             </div>
 
+            {/*table*/}
             <table>
               <thead>
                 {/* set the table header */}
@@ -332,8 +403,6 @@ export function TableTest() {
                 })}
               </tbody>
             </table>
-
-            {/* <AddWord refreshData={refreshData} /> */}
 
             <div className="h-2" />
             <div className="flex items-center gap-2">

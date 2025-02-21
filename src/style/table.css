@@ -8,6 +8,11 @@ table {
     width: 100%;
 }
 
+.tableName {
+  font-size: 2.5rem;
+  right: 25rem;
+}
+
 thead tr{
   border: 1px solid white;
 }
@@ -63,7 +68,7 @@ td {
   padding: 0.7rem;
 }
 
-.top-container {
+/* .top-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -75,7 +80,7 @@ td {
   position: fixed;
   top: 3rem;
   margin-bottom: 2rem; 
-}
+} */
 
 .filters-container {
   display: flex;
@@ -92,14 +97,14 @@ td {
   text-indent: 4.5rem;
 }
 
-@media only screen and (max-width: 716px) {
+/* @media only screen and (max-width: 716px) {
   .top-container h1 {
     font-size: 2.5rem;
     position: fixed;
     top: 3rem;
     margin-bottom: 2rem; 
   }
-}
+} */
 
 @media only screen and (max-hight: 847px) {
   html {
@@ -138,12 +143,12 @@ td {
     font-size: 10px; 
   }
   
-  .top-container h1 {
+  /* .top-container h1 {
     font-size: 1.5rem;
     position: fixed;
     top: 5rem;
     margin-bottom: 2rem; 
-  }
+  } */
 
   .table-container {
     position: relative;
@@ -154,7 +159,6 @@ td {
 
     width: 100vw; /* Make full-width on small scree*/
   }
-
 
   tbody {
     max-height: 56vh; /* Adjust as needed for small screens */
@@ -180,4 +184,32 @@ td {
   tbody {
     max-height: 40vh; /* Adjust as needed for small screens */
   }
+}
+
+@media only screen and (max-width: 880px) {
+  .tableName {
+    font-size: 2rem;
+    right: 1rem;
+  }
+}
+
+@media only screen and (max-width: 792px) {
+  .tableName {
+            font-size: 1.1rem;
+            right: 1rem;
+          }
+}
+
+@media only screen and (max-width: 470px) {
+  .tableName {
+            font-size: 1.1rem;
+            right: 1rem;
+          }
+}
+
+@media only screen and (max-width: 395px) {
+  .tableName {
+            font-size: 1.1rem;
+            right: 1rem;
+          }
 }

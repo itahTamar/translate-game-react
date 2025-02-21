@@ -68,7 +68,7 @@ export default function UpdateUserDetails() {
         const response = await updateUserDetails({ serverUrl, userName: newUserName, email: newEmail, password });
         if (!response) throw new Error("register failed from server");
         alert("User details updated successfully");
-        navigate("/userPage");
+        navigate("/tableTest");
       } else {
         alert("Passwords not match, please check it out");
       }
@@ -82,7 +82,7 @@ export default function UpdateUserDetails() {
       <div className="h-screen">
         <button
           className="absolute top-8 left-16"
-          onClick={() => navigate("/userPage")}
+          onClick={() => navigate("/tableTest")}
         >
           Back
         </button>
