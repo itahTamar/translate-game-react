@@ -93,8 +93,6 @@ export function TableTest() {
     []
   );
 
-  const refreshData = () => handleGetAllUserWords();
-
   //the use of the useSkipper hook
   const [autoResetPageIndex, skipAutoResetPageIndex] = useSkipper();
 
@@ -144,11 +142,17 @@ export function TableTest() {
     if (rowOriginalId === undefined)
       throw new Error("At table/handleDelete, rowOriginalId is undefined");
     try {
+      // 1. Optimistically update the state (assuming your data is in 'dataState')
+      const updatedData = data.filter(
+        (item) => item._id !== rowOriginalId
+      );
+      setData(updatedData); // Update the local state to remove the item
+
+      // 2. Perform the server deletion
       const response = await deleteDataById(serverUrl, rowOriginalId);
       console.log("At handleDeleteWord the data is: ", response);
       const { ok } = response;
       if (!ok) throw new Error("problem delete the word");
-      refreshData();
     } catch (error) {
       console.error("Error delete word:", error);
     }
@@ -203,30 +207,30 @@ export function TableTest() {
           credentials: "include",
         }
       );
-  
+
       if (!response.ok) {
         throw new Error("Failed to export words");
       }
-  
+
       // Extract filename from response headers
       const disposition = response.headers.get("Content-Disposition");
       const fileName = disposition
         ? disposition.split("filename=")[1]
         : "UserWords.csv";
-  
+
       // ✅ Force UTF-8 Encoding
       let csvText = await response.text();
-  
+
       // ✅ Remove extra quotes around Hebrew words
       csvText = csvText.replace(/"([\u0590-\u05FF]+)"/g, "$1");
-  
+
       // ✅ Add BOM to ensure proper UTF-8 encoding in Excel
       const bom = "\uFEFF"; // UTF-8 BOM character
       const utf8Csv = bom + csvText; // Add BOM at the beginning of the CSV file
-  
+
       // Convert text to Blob
       const blob = new Blob([utf8Csv], { type: "text/csv;charset=utf-8;" });
-  
+
       // Create a download link
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -240,7 +244,6 @@ export function TableTest() {
       console.error("Error exporting user words:", error);
     }
   };
-  
 
   // Toggle the dropdown menu
   const toggleDropdown = () => {

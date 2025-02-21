@@ -45,6 +45,7 @@ export const login = async (
   try {
     if (!userName || !password || !email)
       throw new Error("please provide a valid username and password to login");
+
     const response = await axios.post(
       `${serverUrl}/api/users/login`,
       { userName, email, password },
@@ -56,6 +57,14 @@ export const login = async (
     //return "ok: true" from server and userID encoded in cookie
   } catch (error) {
     console.error(error);
+    //if it's an Axios error with response data
+    if (axios.isAxiosError(error) && error.response) {
+      console.log("Server error response:", error.response.data);
+      return { error: error.response.data.error }; // Get message from server
+    }
+
+    // General error
+    return { error: "An unexpected error occurred. Please try again." };
   }
 }; //work ok
 

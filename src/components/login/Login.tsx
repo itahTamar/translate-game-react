@@ -4,12 +4,13 @@ import { login } from "../../api/userApi";
 import { UserContext } from "../../context/userContext";
 import "../../style/buttons.css";
 import { ServerContext } from "../../context/ServerUrlContext";
+import axios from "axios";
 
 //work ok
 const Login = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [email, setEmail] = useState<string>("")
+  const [email, setEmail] = useState<string>("");
   const { setUser } = useContext(UserContext);
   const { setUserEmail } = useContext(UserContext);
   const navigate = useNavigate();
@@ -27,24 +28,36 @@ const Login = () => {
         password
       );
       const response = await login(serverUrl, username, email, password);
-      if (!response) {
-        window.alert(
-          "login failed! check your username, email or password or please register first"
-        );
-        throw new Error("login failed, please register first");
+      console.log("At handleSubmitLogin the response is:", response);
+
+      //Check if the response contains an error
+      if (response.error) {
+        console.log("Error received:", response.error);
+        window.alert(response.error); // Show backend error message
+        return; // Stop execution if login failed
       }
+      
+      console.log("Login successful! Redirecting...");
       setUser(username);
       setUserEmail(email);
       navigate(`/userPage`);
     } catch (error) {
-      console.error(error);
+      console.error("Error during login:", error);
+
+    if (axios.isAxiosError(error) && error.response) {
+      // Display the error message from the server
+      window.alert(error.response.data.error);
+    } else {
+      // General error handling
+      window.alert("An unexpected error occurred. Please try again.");
+    }
     }
   };
 
   const toggleVisibility = () => {
     if (timeoutId) clearTimeout(timeoutId);
     setVisible((prevVisible) => {
-      const newVisible = !prevVisible
+      const newVisible = !prevVisible;
       if (newVisible) {
         const id = setTimeout(() => setVisible(false), 2000);
         //@ts-ignore
@@ -83,9 +96,7 @@ const Login = () => {
               name="email"
               autoComplete="given-email"
               value={email}
-              onInput={(ev) =>
-                setEmail((ev.target as HTMLInputElement).value)
-              }
+              onInput={(ev) => setEmail((ev.target as HTMLInputElement).value)}
             />
           </div>
         </div>
@@ -117,14 +128,14 @@ const Login = () => {
         <div>
           <a
             href="#"
-            onClick={() => navigate('/forgotPassword')}
+            onClick={() => navigate("/forgotPassword")}
             className="text-gray-800"
           >
             {" "}
             Forgot Password?
           </a>
         </div>
-        
+
         <button className="login text-xl" type="submit">
           Log in
         </button>
