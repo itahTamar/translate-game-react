@@ -327,7 +327,7 @@ export function TableTest() {
           <div className="text-black text-3xl">Loading ...</div>
         ) : (
           <div className="p-2 inline-block">
-            <AddWord refreshData={refreshData} />
+            <AddWord setData={setData}/>
 
             {/* Render Filters */}
             <div className="filters-container">
