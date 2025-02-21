@@ -76,7 +76,7 @@ export function TableTest() {
   const [data, setData] = useState<Word[]>([]);
   const serverUrl = useContext(ServerContext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  
+
   //build up the table columns header
   const columns = React.useMemo<ColumnDef<Word>[]>(
     () => [
@@ -200,22 +200,34 @@ export function TableTest() {
         `${serverUrl}/api/userWords/export-user-words`,
         {
           method: "GET",
-          credentials: "include", // Ensure cookies are sent
+          credentials: "include",
         }
       );
-
+  
       if (!response.ok) {
         throw new Error("Failed to export words");
       }
-
-      // Extract filename from the response headers
+  
+      // Extract filename from response headers
       const disposition = response.headers.get("Content-Disposition");
       const fileName = disposition
         ? disposition.split("filename=")[1]
         : "UserWords.csv";
-
-      // Convert response to blob and trigger download
-      const blob = await response.blob();
+  
+      // ✅ Force UTF-8 Encoding
+      let csvText = await response.text();
+  
+      // ✅ Remove extra quotes around Hebrew words
+      csvText = csvText.replace(/"([\u0590-\u05FF]+)"/g, "$1");
+  
+      // ✅ Add BOM to ensure proper UTF-8 encoding in Excel
+      const bom = "\uFEFF"; // UTF-8 BOM character
+      const utf8Csv = bom + csvText; // Add BOM at the beginning of the CSV file
+  
+      // Convert text to Blob
+      const blob = new Blob([utf8Csv], { type: "text/csv;charset=utf-8;" });
+  
+      // Create a download link
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
@@ -228,6 +240,7 @@ export function TableTest() {
       console.error("Error exporting user words:", error);
     }
   };
+  
 
   // Toggle the dropdown menu
   const toggleDropdown = () => {
@@ -252,15 +265,13 @@ export function TableTest() {
   return (
     <>
       <header className="z-50 relative flex justify-between items-center">
-       
-          <button
-            // className="absolute top-8 left-16"
-            className="back absolute top-4 left-4 text-white bg-red-500 px-4 py-2 rounded hover:bg-red-600 "
-            onClick={() => navigate("/userPage")}
-          >
-            Back
-          </button>
-     
+        <button
+          // className="absolute top-8 left-16"
+          className="back absolute top-4 left-4 text-white bg-red-500 px-4 py-2 rounded hover:bg-red-600 "
+          onClick={() => navigate("/userPage")}
+        >
+          Back
+        </button>
 
         <h1 className="tableName absolute top-4">Vocabulary Manager</h1>
 
@@ -318,16 +329,14 @@ export function TableTest() {
             </div>
           )}
         </div>
-
       </header>
 
-      
       <div className="table-container">
         {loading ? (
           <div className="text-black text-3xl">Loading ...</div>
         ) : (
           <div className="p-2 inline-block">
-            <AddWord setData={setData}/>
+            <AddWord setData={setData} />
 
             {/* Render Filters */}
             <div className="filters-container">
