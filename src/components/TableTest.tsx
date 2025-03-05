@@ -18,6 +18,7 @@ import { Word } from "../types/words";
 import AddWord from "./words/AddWord";
 import trashcan from "../style/images/trashcan.png";
 import { ServerContext } from "../context/ServerUrlContext";
+import ImportWords from "./ImportFile";
 
 // The declare module '@tanstack/react-table' statement is used to declare a module augmentation
 // for the @tanstack/react-table module.
@@ -143,9 +144,7 @@ export function TableTest() {
       throw new Error("At table/handleDelete, rowOriginalId is undefined");
     try {
       // 1. Optimistically update the state (assuming your data is in 'dataState')
-      const updatedData = data.filter(
-        (item) => item._id !== rowOriginalId
-      );
+      const updatedData = data.filter((item) => item._id !== rowOriginalId);
       setData(updatedData); // Update the local state to remove the item
 
       // 2. Perform the server deletion
@@ -328,6 +327,14 @@ export function TableTest() {
                 >
                   Export Table
                 </button>
+
+                {/* Import Words from a file */}
+                <div className="px-4 py-2">
+                  <ImportWords
+                    onImportSuccess={handleGetAllUserWords}
+                    onCloseDropdown={() => setDropdownOpen(false)}
+                  />
+                </div>
               </div>
             </div>
           )}

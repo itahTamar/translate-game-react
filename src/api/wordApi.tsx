@@ -112,3 +112,22 @@ export const deleteUserWordById = async (serverUrl: string, word_id: string) => 
         console.error("Error:", (error as Error).message);
     }
 };
+
+//import from file
+export const importUserWord = async (serverUrl: string, formData: FormData) => {
+    try {
+        const response = await axios.post(`${serverUrl}/api/userWords/importUserWordsFromCSV`, formData, {
+            // headers: { "Content-Type": "multipart/form-data" },
+            withCredentials: true, // ✅ Ensure cookies are sent
+        });
+        console.log("At importUserWord the response:", response)
+
+        if (response.data.ok) {
+           return response.data.message
+        } else {
+            console.error("Error retrieving words at importUserWord:", response.data.error);
+        }
+    } catch (error) {
+        console.error("Error:", (error as Error).message);
+    }
+};
