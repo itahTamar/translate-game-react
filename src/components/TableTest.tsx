@@ -166,7 +166,7 @@ export function TableTest() {
       if (response && response.ok) {
         // Clear the local data
         setData([]);
-        alert(`Successfully deleted ${response.deletedCount || 'all'} words!`);
+        // alert(`Successfully deleted ${response.deletedCount || 'all'} words!`);
       } else {
         alert("Failed to delete words. Please try again.");
       }
