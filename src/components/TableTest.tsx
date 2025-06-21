@@ -12,7 +12,7 @@ import {
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteDataById } from "../api/generalApi";
-import { getAllUserWord, updateWordFieldByWordId } from "../api/wordApi";
+import { deleteAllUserWords, getAllUserWord, updateWordFieldByWordId } from "../api/wordApi";
 import "../style/table.css";
 import { Word } from "../types/words";
 import AddWord from "./words/AddWord";
@@ -157,6 +157,25 @@ export function TableTest() {
     }
   }; //work ok
 
+  //Handle delete all user words
+  const handleDeleteAllUserWords = async () => {
+    try {
+      const response = await deleteAllUserWords(serverUrl);
+      console.log("At handleDeleteAllUserWords the response:", response);
+      
+      if (response && response.ok) {
+        // Clear the local data
+        setData([]);
+        alert(`Successfully deleted ${response.deletedCount || 'all'} words!`);
+      } else {
+        alert("Failed to delete words. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error deleting all words:", error);
+      alert("An error occurred while deleting words. Please try again.");
+    }
+  };
+
   useEffect(() => {
     handleGetAllUserWords();
   }, []);
@@ -196,9 +215,11 @@ export function TableTest() {
     debugTable: true,
   });
 
-  //export data to file
-  const handleExportUserWords = async () => {
-    try {
+ //Handle the export with delete all option
+   const handleExportWithDeleteOption = async () => {
+     let exportSuccessful = false;
+     try {
+      // First, do the export
       const response = await fetch(
         `${serverUrl}/api/userWords/export-user-words`,
         {
@@ -239,8 +260,40 @@ export function TableTest() {
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
+
+      // Mark export as successful only if we reach this point
+      exportSuccessful = true;
+      setDropdownOpen(false);
+
     } catch (error) {
       console.error("Error exporting user words:", error);
+      alert("Error occurred during export. Please try again.");
+      return; // Exit early if export failed
+    }
+    
+    // Only show delete option if export was successful
+    if (exportSuccessful) {
+      // Ask user if they want to delete all words
+      const wantToDelete = confirm(
+        "Export completed successfully! Do you want to delete all your words from the database?"
+      );
+
+      if (wantToDelete) {
+        // Double confirmation
+        const confirmDelete = confirm(
+          "Are you sure you want to delete ALL your words? This action cannot be undone!"
+        );
+
+        if (confirmDelete) {
+          await handleDeleteAllUserWords();
+        } else {
+          // User clicked "No" on second confirmation
+          console.log("User cancelled delete operation at second confirmation");
+        }
+      } else {
+        // User clicked "No" on first confirmation
+        console.log("User chose not to delete words after export");
+      }
     }
   };
 
@@ -319,7 +372,7 @@ export function TableTest() {
                 {/* export to file */}
                 <button
                   onClick={() => {
-                    handleExportUserWords();
+                    handleExportWithDeleteOption();
                     setDropdownOpen(false);
                   }}
                   className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left"

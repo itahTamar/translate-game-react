@@ -14,8 +14,9 @@ const ImportWords: React.FC<ImportWordProps> = ({ onImportSuccess, onCloseDropdo
   const serverUrl = useContext(ServerContext);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
+    if (event.target.files && event.target.files.length > 0) {
       setFile(event.target.files[0]);
+      setMessage(""); // Clear previous messages
     }
   };
 
@@ -25,7 +26,17 @@ const ImportWords: React.FC<ImportWordProps> = ({ onImportSuccess, onCloseDropdo
       return;
     }
 
+    // Validate file type
+    const validTypes = ['.csv', '.xlsx'];
+    const fileExtension = file.name.toLowerCase().substring(file.name.lastIndexOf('.'));
+    if (!validTypes.includes(fileExtension)) {
+      setMessage("Please select a CSV or Excel file");
+      return;
+    }
+
     setLoading(true);
+    setMessage(""); // Clear previous messages
+
     const formData = new FormData();
     formData.append("file", file);
 
@@ -54,7 +65,7 @@ const ImportWords: React.FC<ImportWordProps> = ({ onImportSuccess, onCloseDropdo
       <button onClick={handleUpload} disabled={loading}>
         {loading ? "Uploading..." : "Upload"}
       </button>
-      {message && <p>{message}</p>}
+      {message && <p style={{color: message.includes('success') ? 'green' : 'red'}}>{message}</p>}
     </div>
   );
 };

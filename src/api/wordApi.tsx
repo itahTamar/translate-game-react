@@ -113,6 +113,22 @@ export const deleteUserWordById = async (serverUrl: string, word_id: string) => 
     }
 };
 
+//delete all user's words
+export const deleteAllUserWords = async (serverUrl: string) => {
+    try {
+        const response = await axios.delete(`${serverUrl}/api/userWords/deleteAllUserWords/`, { withCredentials: true });
+        console.log("At deleteWordById the response:", response)
+
+        if (response.data.ok) {
+           return response.data
+        } else {
+            console.error("Error retrieving words:", response.data.error);
+        }
+    } catch (error) {
+        console.error("Error:", (error as Error).message);
+    }
+};
+
 //import from file
 export const importUserWord = async (serverUrl: string, formData: FormData) => {
     try {
